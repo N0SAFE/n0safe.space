@@ -4,15 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npx directus start",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "create-snapshot": "npx directus schema snapshot ./snapshots/\"$(date \"+%F\")\"-snapshot-\"$(date \"+%s\")\".yaml",
-    "load-snapshot": "npx directus schema apply --yes ./snapshot/"
+    "start": "directus start",
+    "upgrade": "npm update && npm run migrate",
+    "migrate": "directus database migrate:latest",
+    "snapshot:create": "directus schema snapshot ./snapshots/\"$(date \"+%F\")\"-snapshot-\"$(date \"+%s\")\".yaml",
+    "snapshot:restore": "directus schema apply --yes ./snapshots/2023-06-16-snapshot-1686914571.yaml",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "directus": "^10.1.1",
     "mysql": "^2.18.1"
   }
 }
