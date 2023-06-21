@@ -8,7 +8,9 @@
     ],
     "scripts": {
       "test": "echo \"Error: no test specified\" && exit 1",
-      "dev": "concurrently \"cd apps/api && npm run start\" \"cd apps/front && npm run dev\""
+      "dev": "concurrently --prefix-colors \"blue.bold,green.bold\" --names \"API,Frontend\" \"cd apps/api && npm run start\" \"cd apps/front && npm run dev\"",
+      "build": "cd apps/front && npm run build",
+      "preview": "concurrently \"cd apps/api && npm run start\" \"cd apps/front && npm run preview\""
     },
     "keywords": [],
     "author": "",
