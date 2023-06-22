@@ -1,15 +1,22 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import Database from '@ioc:Adonis/Lucid/Database'
 
 export default class AuthController {
   public async login({ request, auth }: HttpContextContract) {
     const email = request.input('email')
     const password = request.input('password')
+    
+    const user = await Database.from('users').where('email', email).first()
+    
+    if (!user) {
+      return { error: 401, message: 'invalid credentials'}
+    }
 
     try {
-      const token = await auth.use('jwt').attempt(email, password)
+      const token = await auth.use('jwt').attempt(user.id, password)
       return token.toJSON()
     } catch (error) {
-      return error
+      return { error: 401, message: 'invalid credentials'}
     }
   }
 

@@ -6,21 +6,21 @@ export default class extends BaseSchema {
 
   public async up() {
     this.schema.alterTable(this.domainsTable, (table) => {
-      table.integer('process').unsigned().references('id').inTable('processes').onDelete('CASCADE')
+      table.integer('process_id').unsigned().references('id').inTable('processes').onDelete('CASCADE')
     })
 
     this.schema.alterTable(this.processesTable, (table) => {
-      table.integer('domain').unsigned().references('id').inTable('domains').onDelete('CASCADE')
+      table.integer('domain_id').unsigned().references('id').inTable('domains').onDelete('CASCADE')
     })
   }
 
   public async down() {
     this.schema.alterTable(this.domainsTable, (table) => {
-      table.dropForeign(['process'])
+      table.dropForeign(['process_id'])
     })
 
     this.schema.alterTable(this.processesTable, (table) => {
-      table.dropForeign(['domain'])
+      table.dropForeign(['domain_id'])
     })
   }
 }

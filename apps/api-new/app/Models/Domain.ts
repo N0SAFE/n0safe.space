@@ -5,6 +5,9 @@ import Process from './Process'
 export default class Domain extends BaseModel {
   @column({ isPrimary: true })
   public id: number
+  
+  @column({serializeAs: null})
+  public processId: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

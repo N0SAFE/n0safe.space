@@ -5,6 +5,9 @@ import Domain from './Domain'
 export default class Process extends BaseModel {
   @column({ isPrimary: true })
   public id: number
+  
+  @column({serializeAs: null})
+  public domainId: number
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime
@@ -14,7 +17,6 @@ export default class Process extends BaseModel {
 
   @column({
     prepare: (value: string[]): string => JSON.stringify(value),
-    consume: (value: string): string[] => JSON.parse(value),
   })
   public command: string[]
 

@@ -1,9 +1,10 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
+import Process from '../../Models/Process'
 
 export default class ProcessesController {
   public async index({}: HttpContextContract) {
-    return Database.from('processes').select('*')
+    return Process.query().preload('domain');
   }
 
   public async create({}: HttpContextContract) {}
