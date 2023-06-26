@@ -1,9 +1,10 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Database from '@ioc:Adonis/Lucid/Database'
+import User from 'App/Models/User'
 
 export default class UsersController {
-  public async index(httpContext: HttpContextContract) {
-    console.log(httpContext)
+  public async index({request }: HttpContextContract) {
+    
     return Database.from('users').select('*')
   }
 

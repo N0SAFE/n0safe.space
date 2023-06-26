@@ -1,8 +1,9 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Domain from '../../Models/Domain'
+import Domain from 'App/Models/Domain'
 
 export default class DomainsController {
-  public async index({}: HttpContextContract) {
+  public async index({request}: HttpContextContract) {
+    return Domain.filter(request.qs()).preload('process')
     return Domain.query().preload('process')
   }
 

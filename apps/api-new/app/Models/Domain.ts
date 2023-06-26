@@ -1,7 +1,10 @@
 import { DateTime } from 'luxon'
 import { BaseModel, HasOne, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
 import Process from './Process'
+import { Filterable } from '@ioc:Adonis/Addons/LucidFilter'
+import DomainFilter from 'App/Models/Filters/DomainFilter'
 
+@Filterable(DomainFilter)
 export default class Domain extends BaseModel {
   @column({ isPrimary: true })
   public id: number

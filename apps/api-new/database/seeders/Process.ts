@@ -6,7 +6,6 @@ export default class extends BaseSeeder {
     await Process.createMany([
       {
         command: ['node', 'ace', 'serve'],
-        domainId: 1,
       },
       {
         command: ['cd api'],
