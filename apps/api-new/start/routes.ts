@@ -29,31 +29,29 @@ Route.get('health', async ({ response }) => {
   return report.healthy ? response.ok(report) : response.badRequest(report)
 })
 
-Route.resource('users', 'UsersController').apiOnly()
-Route.resource('domains', 'DomainsController').apiOnly()
-Route.resource('processes', 'ProcessesController').apiOnly()
-
 Route.group(() => {
   Route.post('login', 'AuthController.login')
-  Route.get('logout', 'AuthController.logout')
+  Route.post('logout', 'AuthController.logout')
   Route.post('register', 'AuthController.register')
   Route.post('refresh', 'AuthController.refresh')
-})
-
-Route.group(() => {
-  Route.get('/dashboard', async ({ auth }: HttpContextContract) => {
-    await auth.use('jwt').authenticate()
-    const userModel = auth.use('jwt').user!
-    const userPayloadFromJwt = auth.use('jwt').payload!
-    return { userModel, userPayloadFromJwt }
-  })
-
-  Route.get('profile', async ({ auth }) => {
-    return await auth.use('jwt').authenticate()
-  })
+  Route.get('whoami', 'AuthController.whoami')
 }).middleware(async ({ auth }, next) => {
   try {
     await auth.use('jwt').authenticate()
   } catch (e) {}
+  return await next()
+})
+
+Route.group(() => {
+  Route.resource('users', 'UsersController').apiOnly()
+  Route.resource('domains', 'DomainsController').apiOnly()
+  Route.resource('processes', 'ProcessesController').apiOnly()
+  Route.resource('projects', 'ProjectsController').apiOnly()
+}).middleware(async ({ auth, response }: HttpContextContract, next) => {
+  try {
+    await auth.use('jwt').authenticate()
+  } catch (e) {
+    return response.unauthorized({ error: 401, message: 'invalid credentials' })
+  }
   return await next()
 })

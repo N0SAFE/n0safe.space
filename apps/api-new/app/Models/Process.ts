@@ -1,6 +1,16 @@
 import { DateTime } from 'luxon'
-import { BaseModel, HasOne, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
+import {
+  BaseModel,
+  HasMany,
+  HasOne,
+  ManyToMany,
+  column,
+  hasMany,
+  hasOne,
+  manyToMany,
+} from '@ioc:Adonis/Lucid/Orm'
 import Domain from './Domain'
+import Project from './Project'
 
 export default class Process extends BaseModel {
   @column({ isPrimary: true })
@@ -14,10 +24,18 @@ export default class Process extends BaseModel {
 
   @column({
     prepare: (value: string[]): string => JSON.stringify(value),
-    consume: (value: string): string[] => JSON.parse(value),
   })
   public command: string[]
 
   @hasOne(() => Domain)
   public domain: HasOne<typeof Domain>
+
+  @manyToMany(() => Project, {
+    localKey: 'id',
+    pivotForeignKey: 'process_id',
+    relatedKey: 'id',
+    pivotRelatedForeignKey: 'project_id',
+    pivotTable: 'process_project_links',
+  })
+  public projects: ManyToMany<typeof Project>
 }

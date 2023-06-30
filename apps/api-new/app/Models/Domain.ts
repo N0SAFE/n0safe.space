@@ -1,6 +1,6 @@
 import { DateTime } from 'luxon'
 import { BaseModel, HasOne, column, hasOne } from '@ioc:Adonis/Lucid/Orm'
-import Process from './Process'
+import Project from './Project'
 
 export default class Domain extends BaseModel {
   @column({ isPrimary: true })
@@ -12,8 +12,10 @@ export default class Domain extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   public updatedAt: DateTime
 
-  @hasOne(() => Process)
-  public process: HasOne<typeof Process>
+  @hasOne(() => Project, {
+    foreignKey: 'domainId',
+  })
+  public project: HasOne<typeof Project>
 
   @column()
   public identifier: string

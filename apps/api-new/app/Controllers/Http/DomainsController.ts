@@ -1,9 +1,15 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
-import Database from '@ioc:Adonis/Lucid/Database'
+import Domain from '../../Models/Domain'
 
 export default class DomainsController {
   public async index({}: HttpContextContract) {
-    return Database.from('domains').select('*')
+    return Domain.query().preload('project', (projectQuery) => {
+      // preload project for each domain (look at the Domain model)
+      projectQuery.preload('processes').preload('domain', (domainQuery) => {
+        // preload domain for each project (look at the Project model) (loop back to the Domain model)
+        domainQuery.preload('project')
+      })
+    })
   }
 
   public async create({}: HttpContextContract) {}

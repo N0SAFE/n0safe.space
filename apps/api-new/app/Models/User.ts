@@ -1,14 +1,17 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel } from '@ioc:Adonis/Lucid/Orm'
+import { column, beforeSave, BaseModel, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import { compose } from '@ioc:Adonis/Core/Helpers'
 import { SoftDeletes } from '@ioc:Adonis/Addons/LucidSoftDeletes'
+import Domain from './Domain'
 
 export default class User extends compose(BaseModel, SoftDeletes) {
   @column({ isPrimary: true })
   public id: number
 
-  @column()
+  @column({
+    serialize: (value) => value.toLowerCase(),
+  })
   public email: string
 
   @column({ serializeAs: null })
@@ -32,4 +35,7 @@ export default class User extends compose(BaseModel, SoftDeletes) {
 
   @column.dateTime()
   public deletedAt?: DateTime | null
+
+  @hasMany(() => Domain)
+  public domains: HasMany<typeof Domain>
 }
