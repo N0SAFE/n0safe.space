@@ -1,0 +1,53 @@
+{
+  "$schema": "https://turborepo.org/schema.json",
+  "pipeline": {
+      "build": {
+          "dependsOn": ["^build"],
+          "outputs": ["^dist/**", "^.nuxt/**", "^.output/**", "^node_modules/.cache/**", "^node_modules/.vite/**"]
+      },
+      "lint": {
+          "outputs": []
+      },
+      "format": {
+          "outputs": []
+      },
+      "dev": {
+          "cache": false
+      },
+      "start": {
+          "cache": false,
+          "dependsOn": ["^build"]
+      },
+      "test": {
+          "outputs": ["coverage/**", "cypress/screenshots/**", "cypress/videos/**", "jest/**", "test-results/**"],
+          "dependsOn": ["build", "lint"],
+          "inputs": ["src/**/*.tsx", "src/**/*.ts", "test/**/*.ts", "cypress/e2e/**/*.cy.{js,jsx,ts,tsx}", "**/*.test.*"],
+          "outputMode": "full"
+      },
+
+      "typecheck": {
+          "outputs": []
+      },
+      "docs": {
+          "outputs": ["docs/**"]
+      },
+      "release": {
+          "dependsOn": ["^build"],
+          "outputs": ["dist/**"]
+      },
+      "publish": {
+          "dependsOn": ["^build"],
+          "outputs": ["dist/**"]
+      },
+      "clean": {
+          "outputs": []
+      },
+      "update": {
+          "outputs": []
+      },
+      "open:dev": {
+          "cache": false
+      }
+  },
+  "globalDependencies": [".env", "tsconfig.json"]
+}

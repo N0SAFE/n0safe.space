@@ -1,0 +1,163 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+enum DomainStatus {
+  ACTIVE
+  INACTIVE
+}
+
+model DomainOnUser {
+  id       Int    @id @default(autoincrement())
+  userId   Int
+  domainId Int
+  User     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Domain   Domain @relation(fields: [domainId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("domains_on_users")
+}
+
+model User {
+  id Int @id @default(autoincrement())
+
+  email     String  @unique
+  hash      String
+  firstName String?
+  lastName  String?
+
+  refreshTokens RefreshToken[]
+  domains       DomainOnUser[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model RefreshToken {
+  id          String  @id @unique @default(uuid())
+  hashedToken String
+  userId      Int
+  revoked     Boolean @default(false)
+
+  User User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("refresh_tokens")
+}
+
+model Domain {
+  id         Int    @id @default(autoincrement())
+  identifier String @unique
+
+  status DomainStatus   @default(ACTIVE)
+  owners DomainOnUser[]
+
+  project   Project? @relation(fields: [projectId], references: [id])
+  projectId Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("domains")
+}
+
+model ProcessOnProject {
+  id Int @id @default(autoincrement())
+
+  projectId Int
+  processId Int
+
+  Project Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  Process Process @relation(fields: [processId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  @@map("processes_on_projects")
+}
+
+model Project {
+  id Int @id @default(autoincrement())
+
+  domains   Domain[]
+  processes ProcessOnProject[]
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  Process   Process[]
+  
+  @@map("projects")
+}
+
+enum ProcessType {
+  EXECUTE_COMMAND
+  FILE_UPLOAD
+  FILE_REWRITE
+}
+
+model Process {
+  id          Int         @id @default(autoincrement())
+  type        ProcessType
+  description String?
+  status      String?
+  projectId   Int
+  Project     Project     @relation(fields: [projectId], references: [id])
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  // Relationships to type-specific process models
+  fileUploadProcess       FileUploadProcess?
+  commandExecutionProcess CommandExecutionProcess?
+  fileRewriteProcess      FileRewriteProcess?
+
+  ProcessOnProject ProcessOnProject[]
+  
+  @@map("processes")
+}
+
+model CommandExecutionProcess {
+  processId Int     @unique
+  command   String
+  cwd       String?
+  shell     Boolean @default(false)
+
+  Process Process @relation(fields: [processId], references: [id])
+  
+  @@map("command_execution_processes")
+}
+
+model FileRewriteProcess {
+  processId Int     @unique
+  file      String
+  data      String
+  overwrite Boolean @default(false)
+
+  Process Process @relation(fields: [processId], references: [id])
+  
+  @@map("file_rewrite_processes")
+}
+
+model FileUploadProcess {
+  processId Int     @unique
+  file      String
+  path      String
+  overwrite Boolean @default(false)
+
+  Process Process @relation(fields: [processId], references: [id])
+  
+  @@map("file_upload_processes")
+}
