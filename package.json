@@ -1,22 +1,35 @@
 {
-    "name": "n0safe",
-    "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
-    "workspaces": [
-      "apps/*"
-    ],
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1",
-      "dev": "concurrently --prefix-colors \"blue.bold,green.bold\" --names \"API,Frontend\" \"cd apps/api && npm run start\" \"cd apps/front && npm run dev\"",
-      "build": "cd apps/front && npm run build",
-      "preview": "concurrently \"cd apps/api && npm run start\" \"cd apps/front && npm run preview\""
-    },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "devDependencies": {
-      "concurrently": "^8.0.1"
-    }
+  "name": "n0safe",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "dotenv turbo run dev --parallel --node-colors",
+    "open:dev": "dotenv turbo run open:dev",
+    "start": "dotenv turbo run start --parallel",
+    "build": "dotenv npm run build:all",
+    "build:all": "dotenv turbo run build --parallel",
+    "test": "dotenv turbo run test --color --output-logs=new-only",
+    "format": "dotenv turbo run format",
+    "lint": "dotenv turbo run lint",
+    "update": "dotenv turbo run update",
+    "open:all": "dotenv npm run open -ws --silent"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "npm": ">=9.0.0",
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "dotenv": "^16.3.1"
+  },
+  "dependencies": {
+    "dotenv-cli": "^7.2.1",
+    "turbo": "^1.10.7"
   }
-  
+}
