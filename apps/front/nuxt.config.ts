@@ -6,7 +6,6 @@ export default defineNuxtConfig({
     enabled: true,
   },
   modules: [
-    'nuxt-directus',
     '@nuxtjs/web-vitals',
     '@nuxtjs/tailwindcss',
     'nuxt-vitest',
@@ -33,8 +32,5 @@ export default defineNuxtConfig({
     provider: 'log',
     debug: false, // debug enable metrics reporting on dev environments
     disabled: false,
-  },
-  storybook: {
-    // Options
-  },
+  }
 })

@@ -47,9 +47,8 @@ const { subProcess } = createServiceWriter(
     { command: options.command }
 );
 
-subProcess.stdout.on('data', function(data){
-    process.stdout.write(data.toString())
-})
+subProcess.stdout.pipe(process.stdout)
+subProcess.stderr.pipe(process.stderr)
 
 // TODO: implement the keep alive
 // TODO: implement the timeout

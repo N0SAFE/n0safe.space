@@ -20,11 +20,11 @@ const params = {
 waitPort(params)
   .then(({ open, ipVersion }) => {
     if (open) {
-      console.error(clc.red(`Port is already open (version ${ipVersion})!`))
+      throw new Error(clc.red(`Port is already open (version ${ipVersion})!`))
     } else {
       childProcess.spawn(args.join(' '), { stdio: 'inherit', shell: true })
     }
   })
   .catch((err) => {
-    console.error(`An unknown error occured while waiting for the port: ${err}`)
+    throw new Error(clc.red(`An error occured while waiting for the port: ${err}`))
   })

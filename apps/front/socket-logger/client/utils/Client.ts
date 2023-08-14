@@ -1,7 +1,7 @@
 import { default as io, Socket } from 'socket.io-client'
 import { EventEmitter } from 'events'
 import { AdvancedSocketMethods } from '../../utils'
-import clc from 'cli-color'
+import chalk from 'chalk'
 
 export interface IInfo {
   host: string
@@ -49,7 +49,7 @@ export default class Client implements AdvancedSocketMethods {
     this.events.emit('disconnect')
   }
   private errorFn: (err: any) => void = (err) => {
-    console.error(clc.red('ERR', JSON.stringify(err)))
+    console.error(chalk.red('ERR', JSON.stringify(err)))
   }
 
   emitOnClusterConnection(

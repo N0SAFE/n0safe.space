@@ -6,7 +6,7 @@
       color: white;
       height: 100%;
       font-weight: 100;
-      font-family: 'Cascadia Code', sans-serif;
+      font-family: sans-serif;
       font-size: smaller;
       overflow: auto;
     "
@@ -30,7 +30,7 @@ const createReaderClient = useSocketLogger()
 const client = createReaderClient({
   host: 'localhost',
   port: 65000,
-  space: 'server',
+  space: 'cli-main',
 })
 
 onUnmounted(() => {

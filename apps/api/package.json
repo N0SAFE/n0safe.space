@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "node checkPort.js node ace serve --watch",
+    "dev:cli-logger": "npx ts-node ../../socket-logger/src/cli-runner/client/serviceWriter.cli.ts --port=65000 --command=\"npm run dev\" --space=cli-api",
+    "start": "npx ts-node ../../socket-logger/src/cli-runner/client/serviceWriter.cli.ts --port=65000 --command=\"npm run _start\" --space=cli-api",
     "build": "node ace build --production",
-    "start": "node checkPort.js node build/server.js",
+    "_start": "node checkPort.js node build/server.js",
     "test": "npm run db:unmigrate && node ace test && npm run db:fresh:seed",
     "lint": "eslint . --ext=.ts --fix",
     "format": "prettier --write .",
