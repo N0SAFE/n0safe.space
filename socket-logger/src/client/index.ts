@@ -14,7 +14,7 @@ export function createReader(
     keepAlive = true,
     timeout = 1000,
   }: {
-    port: number
+    port?: number | undefined
     host: string
     protocol?: string
     path?: string

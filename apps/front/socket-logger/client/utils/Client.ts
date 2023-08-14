@@ -109,14 +109,18 @@ export default class Client implements AdvancedSocketMethods {
       delete this.socket
     }
     this.socket = io(
-      `${this.info.protocol}://${this.info.host}:${this.info.port}${this.info.path}`,
+      `${this.info.protocol}://${this.info.host}${
+        this.info.port ? `:${this.info.port}` : ''
+      }${this.info.path}`,
       {
         autoConnect: true,
         reconnection: true,
       }
     )
     console.log(
-      `connecting to ${this.info.protocol}://${this.info.host}:${this.info.port}${this.info.path}`
+      `connecting to ${this.info.protocol}://${this.info.host}${
+        this.info.port ? `:${this.info.port}` : ''
+      }${this.info.path}`
     )
     this.onRedirect((info) => {
       this.connect(info)

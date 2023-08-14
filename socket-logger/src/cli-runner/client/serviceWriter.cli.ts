@@ -1,5 +1,7 @@
 import { program, InvalidOptionArgumentError } from "commander";
 import { createServiceWriter } from "../../client/index";
+import dotenv from "dotenv";
+dotenv.config();
 
 function myParseInt(value: any, dummyPrevious: any): number {
     // parseInt takes a string and a radix
@@ -11,16 +13,20 @@ function myParseInt(value: any, dummyPrevious: any): number {
 }
 
 program
-    .requiredOption("--port <integer>", "port number of the server", myParseInt)
-    .option("--host <string>", "host of the server", "localhost")
-    .option("--protocol <string>", "protocol of the server", "http")
-    .option("--path <string>", "path of the server", "/")
-    .option("-s, --space <char>", "space of the process to write", "default")
+    .option("--port <integer>", "port number of the server", myParseInt)
+    .option("--host <string>", "host of the server")
+    .option("--protocol <string>", "protocol of the server")
+    .option("--path <string>", "path of the server")
+    .requiredOption("-s, --space <char>", "space of the process to write")
     .requiredOption("-cmd, --command <char>", "command to execute")
-    .option("-ka, --keep-alive", "keep the process alive", true)
-    .option("-to, --timeout", "initial-timeout", myParseInt, 1000);
+    .option("-ka, --keep-alive", "keep the process alive")
+    .option("-to, --timeout", "initial-timeout", myParseInt);
 
 program.parse();
+
+if(process.env.ARGS_FOR_SOCKET_LOGGER){
+  console.log("env: " + process.env.ARGS_FOR_SOCKET_LOGGER)
+}
 
 const options: {
     port: number;
@@ -31,7 +37,11 @@ const options: {
     command: string;
     keepAlive: boolean;
     timeout: number;
-} = program.opts() as any
+} = {
+  ...{host: "localhost", protocol: "http", path: "/", keepAlive: false, timeout: 1000},
+  ...process.env.ARGS_FOR_SOCKET_LOGGER ? JSON.parse(process.env.ARGS_FOR_SOCKET_LOGGER) : {},
+   ...program.opts() as any
+  }
 
 console.log(options);
 

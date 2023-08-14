@@ -32,5 +32,5 @@ export default defineNuxtConfig({
     provider: 'log',
     debug: false, // debug enable metrics reporting on dev environments
     disabled: false,
-  }
+  },
 })

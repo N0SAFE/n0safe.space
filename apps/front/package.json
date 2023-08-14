@@ -5,8 +5,8 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --no-clear",
-    "dev:cli-logger": "npx ts-node ../../socket-logger/src/cli-runner/client/serviceWriter.cli.ts --port=65000 --command=\"npm run dev\" --space=cli-front",
-    "start": "npx ts-node ../../socket-logger/src/cli-runner/client/serviceWriter.cli.ts --port=65000 --command=\"npm run _start\" --space=cli-front",
+    "dev:cli-logger": "npx ts-node ../../socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run dev\" --space=cli-front",
+    "start": "npx ts-node ../../socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run _start\" --space=cli-front",
     "_start": "nuxt preview",
     "generate": "nuxt generate",
     "preview": "nuxt preview",

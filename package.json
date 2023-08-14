@@ -7,12 +7,12 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "dotenv turbo run dev --parallel --node-colors   ",
-    "dev:cli-logger": "npx ts-node socket-logger/src/cli-runner/client/serviceWriter.cli.ts --port=65000 --command=\"npm run _dev:cli-logger\" --space=cli-main",
+    "dev": "dotenv turbo run dev --parallel --node-colors",
+    "dev:cli-logger": "npx ts-node socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run _dev:cli-logger\" --space=cli-main",
     "_dev:cli-logger": "dotenv turbo run dev:cli-logger --parallel --node-colors --fail-fast",
     "open:dev": "dotenv turbo run open:dev --fail-fast",
-    "start": "npx ts-node socket-logger/src/cli-runner/client/serviceWriter.cli.ts --port=65000 --command=\"npm run _start\" --space=cli-main",
-    "_start": "dotenv turbo run start --parallel --fail-fast" ,
+    "start": "npx ts-node socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run _start\" --space=cli-main",
+    "_start": "dotenv turbo run start --parallel --fail-fast",
     "build": "dotenv turbo run build --parallel --fail-fast",
     "test": "dotenv turbo run test --color --output-logs=new-only --fail-fast",
     "format": "dotenv turbo run format --fail-fast",
@@ -32,6 +32,7 @@
     "dotenv": "^16.3.1"
   },
   "dependencies": {
+    "cross-env": "^7.0.3",
     "dotenv-cli": "^7.2.1",
     "turbo": "^1.10.12"
   }
