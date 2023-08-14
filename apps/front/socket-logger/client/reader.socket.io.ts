@@ -1,5 +1,5 @@
 import { Client } from './utils'
-import clc from 'cli-color'
+import chalk from 'chalk'
 
 type payload = {
   type: 'reader'
@@ -25,7 +25,7 @@ class LoggerReaderClient extends Client {
       this.guard.sendRequestPayloadOnServerConnect || ((payload) => payload)
 
     this.onClusterConnect(() => {
-      console.log(clc.yellow('Cluster detected, waiting for connection...'))
+      console.log(chalk.yellow('Cluster detected, waiting for connection...'))
       this.emit(
         'request',
         this.guard.sendRequestPayloadOnClusterConnect?.({
@@ -36,7 +36,7 @@ class LoggerReaderClient extends Client {
     })
 
     this.onServerConnect(() => {
-      console.log(clc.green('Connection established'))
+      console.log(chalk.green('Connection established'))
       this.emit(
         'subscribe',
         this.guard.sendRequestPayloadOnServerConnect?.({
@@ -47,7 +47,7 @@ class LoggerReaderClient extends Client {
     })
 
     this.onDisconnect(() => {
-      console.log(clc.red('Disconnected from server'))
+      console.log(chalk.red('Disconnected from server'))
     })
   }
 }

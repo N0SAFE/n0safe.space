@@ -92,7 +92,6 @@ onMounted(() => {
     error: 'Error logging out',
   })
 
-
   promise.then(async () => {
     navigateTo('/')
   })

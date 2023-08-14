@@ -6,12 +6,11 @@ export default defineNuxtConfig({
     enabled: true,
   },
   modules: [
-    'nuxt-directus',
     '@nuxtjs/web-vitals',
     '@nuxtjs/tailwindcss',
     'nuxt-vitest',
     'nuxt-simple-sitemap',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
   ],
   pinia: {
     autoImports: [
@@ -34,7 +33,4 @@ export default defineNuxtConfig({
     debug: false, // debug enable metrics reporting on dev environments
     disabled: false,
   },
-  storybook: {
-    // Options
-  }
 })

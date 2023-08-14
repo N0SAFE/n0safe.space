@@ -13,11 +13,11 @@ export class SpacesRessourceGetCollectionDto extends BaseDto {
   @Type(() => SpacesRessourceGetCollectionBodyDto)
   private _body: SpacesRessourceGetCollectionBodyDto = new SpacesRessourceGetCollectionBodyDto({})
 
-  public get body (): SpacesRessourceGetCollectionBodyDto {
+  public get body(): SpacesRessourceGetCollectionBodyDto {
     return this._body || new SpacesRessourceGetCollectionBodyDto({})
   }
 
-  public set body (value: SpacesRessourceGetCollectionBodyDto | undefined) {
+  public set body(value: SpacesRessourceGetCollectionBodyDto | undefined) {
     this._body = new SpacesRessourceGetCollectionBodyDto(value || {})
   }
 
@@ -26,14 +26,14 @@ export class SpacesRessourceGetCollectionDto extends BaseDto {
   @ValidateNested()
   @Type(() => SpacesRessourceGetCollectionQueryDto)
   private _query: SpacesRessourceGetCollectionQueryDto = new SpacesRessourceGetCollectionQueryDto(
-      {}
-    )
+    {}
+  )
 
-  public get query (): SpacesRessourceGetCollectionQueryDto {
+  public get query(): SpacesRessourceGetCollectionQueryDto {
     return this._query || new SpacesRessourceGetCollectionQueryDto({})
   }
 
-  public set query (value: SpacesRessourceGetCollectionQueryDto | undefined) {
+  public set query(value: SpacesRessourceGetCollectionQueryDto | undefined) {
     this._query = new SpacesRessourceGetCollectionQueryDto(value || {})
   }
 }

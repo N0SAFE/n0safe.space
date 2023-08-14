@@ -12,14 +12,14 @@ export class ProjectsRessourceGetCollectionDto extends BaseDto {
   @ValidateNested()
   @Type(() => ProjectsRessourceGetCollectionBodyDto)
   private _body: ProjectsRessourceGetCollectionBodyDto = new ProjectsRessourceGetCollectionBodyDto(
-      {}
-    )
+    {}
+  )
 
-  public get body (): ProjectsRessourceGetCollectionBodyDto {
+  public get body(): ProjectsRessourceGetCollectionBodyDto {
     return this._body || new ProjectsRessourceGetCollectionBodyDto({})
   }
 
-  public set body (value: ProjectsRessourceGetCollectionBodyDto | undefined) {
+  public set body(value: ProjectsRessourceGetCollectionBodyDto | undefined) {
     this._body = new ProjectsRessourceGetCollectionBodyDto(value || {})
   }
 
@@ -28,13 +28,13 @@ export class ProjectsRessourceGetCollectionDto extends BaseDto {
   @ValidateNested()
   @Type(() => ProjectsRessourceGetCollectionQueryDto)
   private _query: ProjectsRessourceGetCollectionQueryDto =
-      new ProjectsRessourceGetCollectionQueryDto({})
+    new ProjectsRessourceGetCollectionQueryDto({})
 
-  public get query (): ProjectsRessourceGetCollectionQueryDto {
+  public get query(): ProjectsRessourceGetCollectionQueryDto {
     return this._query || new ProjectsRessourceGetCollectionQueryDto({})
   }
 
-  public set query (value: ProjectsRessourceGetCollectionQueryDto | undefined) {
+  public set query(value: ProjectsRessourceGetCollectionQueryDto | undefined) {
     this._query = new ProjectsRessourceGetCollectionQueryDto(value || {})
   }
 }

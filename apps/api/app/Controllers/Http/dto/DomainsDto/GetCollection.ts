@@ -13,11 +13,11 @@ export class DomainsRessourceGetCollectionDto extends BaseDto {
   @Type(() => DomainsRessourceGetCollectionBodyDto)
   private _body: DomainsRessourceGetCollectionBodyDto = new DomainsRessourceGetCollectionBodyDto({})
 
-  public get body (): DomainsRessourceGetCollectionBodyDto {
+  public get body(): DomainsRessourceGetCollectionBodyDto {
     return this._body || new DomainsRessourceGetCollectionBodyDto({})
   }
 
-  public set body (value: DomainsRessourceGetCollectionBodyDto | undefined) {
+  public set body(value: DomainsRessourceGetCollectionBodyDto | undefined) {
     this._body = new DomainsRessourceGetCollectionBodyDto(value || {})
   }
 
@@ -26,14 +26,14 @@ export class DomainsRessourceGetCollectionDto extends BaseDto {
   @ValidateNested()
   @Type(() => DomainsRessourceGetCollectionQueryDto)
   private _query: DomainsRessourceGetCollectionQueryDto = new DomainsRessourceGetCollectionQueryDto(
-      {}
-    )
+    {}
+  )
 
-  public get query (): DomainsRessourceGetCollectionQueryDto {
+  public get query(): DomainsRessourceGetCollectionQueryDto {
     return this._query || new DomainsRessourceGetCollectionQueryDto({})
   }
 
-  public set query (value: DomainsRessourceGetCollectionQueryDto | undefined) {
+  public set query(value: DomainsRessourceGetCollectionQueryDto | undefined) {
     this._query = new DomainsRessourceGetCollectionQueryDto(value || {})
   }
 }

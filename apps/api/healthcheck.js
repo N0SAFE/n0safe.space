@@ -3,7 +3,7 @@ const clc = require('cli-color')
 
 require('dotenv').config()
 
-async function main () {
+async function main() {
   const child = spawn('npm run dev', {
     shell: true,
     stdio: 'inherit',

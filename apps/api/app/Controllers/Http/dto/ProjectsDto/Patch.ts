@@ -34,11 +34,11 @@ export class ProjectsRessourcePatchDto extends BaseDto {
   @Type(() => ProjectsRessourcePatchBodyDto)
   private _body: ProjectsRessourcePatchBodyDto = new ProjectsRessourcePatchBodyDto({})
 
-  public get body (): ProjectsRessourcePatchBodyDto {
+  public get body(): ProjectsRessourcePatchBodyDto {
     return this._body || new ProjectsRessourcePatchBodyDto({})
   }
 
-  public set body (value: ProjectsRessourcePatchBodyDto | undefined) {
+  public set body(value: ProjectsRessourcePatchBodyDto | undefined) {
     this._body = new ProjectsRessourcePatchBodyDto(value || {})
   }
 
@@ -48,11 +48,11 @@ export class ProjectsRessourcePatchDto extends BaseDto {
   @Type(() => ProjectsRessourcePatchQueryDto)
   private _query: ProjectsRessourcePatchQueryDto = new ProjectsRessourcePatchQueryDto({})
 
-  public get query (): ProjectsRessourcePatchQueryDto {
+  public get query(): ProjectsRessourcePatchQueryDto {
     return this._query || new ProjectsRessourcePatchQueryDto({})
   }
 
-  public set query (value: ProjectsRessourcePatchQueryDto | undefined) {
+  public set query(value: ProjectsRessourcePatchQueryDto | undefined) {
     this._query = new ProjectsRessourcePatchQueryDto(value || {})
   }
 }

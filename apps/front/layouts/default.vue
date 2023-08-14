@@ -117,10 +117,9 @@ const toggleDark = () => {
   mode.value = isDark.value ? 'light' : 'dark'
 }
 
-
 const sidebarRef = ref(null)
 onMounted(() => {
-  console.log("close")
+  console.log('close')
   // sidebarRef.value.close()
   // sidebarRef.close()
   console.log(sidebarRef.value)

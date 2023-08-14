@@ -2,10 +2,29 @@
   <div>
     <div
       id="sky"
-      class="fixed z-50 top-0 h-screen w-screen flex justify-center items-center"
+      class="
+        fixed
+        z-50
+        top-0
+        h-screen
+        w-screen
+        flex
+        justify-center
+        items-center
+      "
     >
       <div
-        class="hidden flex-col items-center justify-center bg-gray-900 text-white w-screen h-screen md:flex"
+        class="
+          hidden
+          flex-col
+          items-center
+          justify-center
+          bg-gray-900
+          text-white
+          w-screen
+          h-screen
+          md:flex
+        "
       >
         <div id="stars" class="self-start z-30"></div>
         <div id="stars2" class="self-start z-40"></div>
@@ -15,9 +34,26 @@
         </h1>
         <nuxt-link
           to="/"
-          class="space cursor-pointer z-50 flex-col justify-center items-center flex pt-4 px-8 rounded-md text-purple-800 transform duration-150 ease-in hover:text-white hover:scale-105"
+          class="
+            space
+            cursor-pointer
+            z-50
+            flex-col
+            justify-center
+            items-center
+            flex
+            pt-4
+            px-8
+            rounded-md
+            text-purple-800
+            transform
+            duration-150
+            ease-in
+            hover:text-white
+            hover:scale-105
+          "
         >
-        <!-- DON T FORGET TO CHANGE THE IMG -->
+          <!-- DON T FORGET TO CHANGE THE IMG -->
           <img src="/astronaut.png" alt="" />
         </nuxt-link>
       </div>
@@ -75,6 +111,7 @@ body {
   height: 1px;
   left: 0;
   background: transparent;
+
   box-shadow: 1226px 1621px #fff, 1021px 1311px #fff, 589px 396px #fff,
     106px 950px #fff, 1628px 685px #fff, 1982px 1853px #fff, 683px 1196px #fff,
     885px 147px #fff, 140px 572px #fff, 1414px 202px #fff, 1287px 375px #fff,

@@ -1,85 +1,95 @@
 export default class AdvancedMap<K, V> extends Map<K, V> {
-    public constructor(entries?: readonly (readonly [K, V])[] | null) {
-        super(entries);
-    }
+  public constructor(entries?: readonly (readonly [K, V])[] | null) {
+    super(entries)
+  }
 
-    public has(search: ((key: K, value: V, self?: this) => boolean) | K): boolean {
-        if (typeof search === "function") {
-            search = search as (key: K, value: V, self?: this) => boolean;
-            for (const [k, v] of this) {
-                if (search(k, v, this)) {
-                    return true;
-                }
-            }
-            return false;
+  public has(
+    search: ((key: K, value: V, self?: this) => boolean) | K
+  ): boolean {
+    if (typeof search === 'function') {
+      search = search as (key: K, value: V, self?: this) => boolean
+      for (const [k, v] of this) {
+        if (search(k, v, this)) {
+          return true
         }
-        return super.has(search);
+      }
+      return false
     }
+    return super.has(search)
+  }
 
-    public find(search: ((key: K, value: V, self: this) => boolean) | K): { key: K; value: V } | undefined {
-        if (typeof search === "function") {
-            search = search as (key: K, value: V, self: this) => boolean;
-            for (const [k, v] of this) {
-                if (search(k as K, v as V, this)) {
-                    return {
-                        key: k,
-                        value: v,
-                    };
-                }
-            }
-            return undefined;
+  public find(
+    search: ((key: K, value: V, self: this) => boolean) | K
+  ): { key: K; value: V } | undefined {
+    if (typeof search === 'function') {
+      search = search as (key: K, value: V, self: this) => boolean
+      for (const [k, v] of this) {
+        if (search(k as K, v as V, this)) {
+          return {
+            key: k,
+            value: v,
+          }
         }
-        const value = super.get(search);
-        if (value === undefined) {
-            return undefined;
-        }
-        return {
-            key: search,
-            value,
-        };
+      }
+      return undefined
     }
+    const value = super.get(search)
+    if (value === undefined) {
+      return undefined
+    }
+    return {
+      key: search,
+      value,
+    }
+  }
 
-    public filter(search: ((key: K, value: V, self: this) => boolean) | K): AdvancedMap<K, V> {
-        if (typeof search === "function") {
-            search = search as (key: K, value: V, self: this) => boolean;
-            const results: AdvancedMap<K, V> = new AdvancedMap<K, V>();
-            for (const [k, v] of this) {
-                if (search(k as K, v as V, this)) {
-                    results.set(k, v);
-                }
-            }
-            return results;
+  public filter(
+    search: ((key: K, value: V, self: this) => boolean) | K
+  ): AdvancedMap<K, V> {
+    if (typeof search === 'function') {
+      search = search as (key: K, value: V, self: this) => boolean
+      const results: AdvancedMap<K, V> = new AdvancedMap<K, V>()
+      for (const [k, v] of this) {
+        if (search(k as K, v as V, this)) {
+          results.set(k, v)
         }
-        const value = super.get(search);
-        if (value === undefined) {
-            return new AdvancedMap<K, V>();
-        }
-        return new AdvancedMap<K, V>([[search, value]]);
+      }
+      return results
     }
-    
-    public some(search: ((key: K, value: V, self: this) => boolean) | K): boolean {
-        if (typeof search === "function") {
-            search = search as (key: K, value: V, self: this) => boolean;
-            for (const [k, v] of this) {
-                if (search(k as K, v as V, this)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-        return super.has(search);
+    const value = super.get(search)
+    if (value === undefined) {
+      return new AdvancedMap<K, V>()
     }
-    
-    public every(search: ((key: K, value: V, self: this) => boolean) | K): boolean {
-        if (typeof search === "function") {
-            search = search as (key: K, value: V, self: this) => boolean;
-            for (const [k, v] of this) {
-                if (!search(k as K, v as V, this)) {
-                    return false;
-                }
-            }
-            return true;
+    return new AdvancedMap<K, V>([[search, value]])
+  }
+
+  public some(
+    search: ((key: K, value: V, self: this) => boolean) | K
+  ): boolean {
+    if (typeof search === 'function') {
+      search = search as (key: K, value: V, self: this) => boolean
+      for (const [k, v] of this) {
+        if (search(k as K, v as V, this)) {
+          return true
         }
-        return super.has(search);
+      }
+      return false
     }
+    return super.has(search)
+  }
+
+  public every(
+    search: ((key: K, value: V, self: this) => boolean) | K
+  ): boolean {
+    if (typeof search === 'function') {
+      search = search as (key: K, value: V, self: this) => boolean
+      for (const [k, v] of this) {
+        if (!search(k as K, v as V, this)) {
+          return false
+        }
+      }
+      return true
+    }
+    return super.has(search)
+  }
 }
