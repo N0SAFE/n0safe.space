@@ -4,19 +4,19 @@ import { UsersRessourcePatchDto } from './dto/UsersDto/Patch'
 import User from '../../Models/User'
 
 export default class UsersController {
-  public async index ({}: HttpContextContract) {
+  public async index({}: HttpContextContract) {
     return User.query().preload('spaces').preload('domains')
   }
 
-  public async create ({}: HttpContextContract) {}
+  public async create({}: HttpContextContract) {}
 
-  public async store ({}: HttpContextContract) {}
+  public async store({}: HttpContextContract) {}
 
-  public async show ({}: HttpContextContract) {}
+  public async show({}: HttpContextContract) {}
 
-  public async edit ({}: HttpContextContract) {}
+  public async edit({}: HttpContextContract) {}
 
-  public async update ({ request, response, auth, params }: HttpContextContract) {
+  public async update({ request, response, auth, params }: HttpContextContract) {
     const connectedUser = auth.use('jwt').user as User
 
     if (connectedUser.id !== Number(params.id)) {
@@ -42,7 +42,7 @@ export default class UsersController {
     return response.ok(user)
   }
 
-  public async destroy ({}: HttpContextContract) {
+  public async destroy({}: HttpContextContract) {
     Database.from('users').delete()
   }
 }

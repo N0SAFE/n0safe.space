@@ -2,9 +2,9 @@ import { spawn } from 'child_process'
 import clc from 'cli-color'
 import LoggerWriterClient, { WriterGuard } from './writer.socker.io'
 import LoggerReaderClient, { ReaderGuard } from './reader.socket.io'
-export function createAdminReader () {}
+export function createAdminReader() {}
 
-export function createReader (
+export function createReader(
   {
     port,
     host,
@@ -31,7 +31,7 @@ export function createReader (
   )
 }
 
-export function createWriter (
+export function createWriter(
   {
     port,
     host,
@@ -58,7 +58,7 @@ export function createWriter (
   )
 }
 
-export function createServiceWriter (
+export function createServiceWriter(
   {
     port,
     host,

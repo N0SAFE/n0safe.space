@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     '@nuxtjs/tailwindcss',
     'nuxt-vitest',
     'nuxt-simple-sitemap',
-    '@pinia/nuxt'
+    '@pinia/nuxt',
   ],
   pinia: {
     autoImports: [
@@ -36,5 +36,5 @@ export default defineNuxtConfig({
   },
   storybook: {
     // Options
-  }
+  },
 })

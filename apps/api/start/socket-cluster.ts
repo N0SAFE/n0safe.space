@@ -47,7 +47,7 @@ new Promise((resolve, reject) => {
           } catch {
             return {
               success: false,
-              message: 'Can\'t authenticate, invalid token',
+              message: "Can't authenticate, invalid token",
             }
           }
 

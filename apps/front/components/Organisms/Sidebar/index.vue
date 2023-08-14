@@ -46,7 +46,7 @@
         dark:hover:bg-gray-600
         dark:hover:text-white
       "
-      @click="toggle  "
+      @click="toggle"
     >
       <svg
         aria-hidden="true"

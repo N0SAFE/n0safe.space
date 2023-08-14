@@ -4,7 +4,7 @@ import User from 'App/Models/User'
 import AuthLoginDto from './dto/AuthDto/Login'
 
 export default class AuthController {
-  public async login ({ request, auth, response }: HttpContextContract) {
+  public async login({ request, auth, response }: HttpContextContract) {
     const dto = new AuthLoginDto({ body: request.body() })
     const error = await dto.validate()
     if (error.length > 0) {
@@ -39,14 +39,20 @@ export default class AuthController {
       ) {
         return response.badRequest({ message: 'too many request', success: false })
       }
-      if (error.code === 'ECONNREFUSED') {
+      if (
+        error.code === 'ECONNREFUSED' ||
+        error.code === 'ER_ACCESS_DENIED_NO_PASSWORD_ERROR' ||
+        error.code === 'ER_ACCESS_DENIED_ERROR' ||
+        error.code === 'ER_DBACCESS_DENIED_ERROR' ||
+        error.code === 'ER_DBACCESS_DENIED_ERROR'
+      ) {
         return response.badRequest({ message: 'database connection refused', success: false })
       }
       return response.unauthorized({ message: 'invalid credentials', success: false })
     }
   }
 
-  public async logout ({ auth, response }: HttpContextContract) {
+  public async logout({ auth, response }: HttpContextContract) {
     response.clearCookie('access_token')
     response.clearCookie('refresh_token')
     if (!auth.use('jwt').user) {
@@ -60,7 +66,7 @@ export default class AuthController {
     return response.ok({ message: 'logged out', success: true })
   }
 
-  public async register ({ auth, request, response }: HttpContextContract) {
+  public async register({ auth, request, response }: HttpContextContract) {
     const email = request.input('email')
     const password = request.input('password')
     const rememberMe = !!request.input('rememberMe')
@@ -97,7 +103,7 @@ export default class AuthController {
     return response.created({ ...jwt.toJSON(), success: true })
   }
 
-  public async refresh ({ auth, request, response }: HttpContextContract) {
+  public async refresh({ auth, request, response }: HttpContextContract) {
     const refreshToken = request.cookie('refresh_token')
     if (!refreshToken) {
       return response.unauthorized({ message: 'no refresh token provided', success: false })
@@ -122,7 +128,7 @@ export default class AuthController {
     }
   }
 
-  public async whoami ({ auth, response }: HttpContextContract) {
+  public async whoami({ auth, response }: HttpContextContract) {
     try {
       const jwt = await auth.use('jwt').login(auth.use('jwt').user as User)
       return response.ok({

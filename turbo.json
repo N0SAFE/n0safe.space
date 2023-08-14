@@ -3,7 +3,7 @@
   "pipeline": {
       "build": {
           "dependsOn": ["^build"],
-          "outputs": ["^dist/**", "^.nuxt/**", "^.output/**", "^node_modules/.cache/**", "^node_modules/.vite/**"]
+          "outputs": ["^dist/**", "^.nuxt/**", "^.output/**", "^node_modules/.cache/**", "^node_modules/.vite/**", "^build/**"]
       },
       "lint": {
           "outputs": []
@@ -16,7 +16,7 @@
       },
       "start": {
           "cache": false,
-          "dependsOn": ["^build"]
+          "dependsOn": ["build"]
       },
       "test": {
           "outputs": ["coverage/**", "cypress/screenshots/**", "cypress/videos/**", "jest/**", "test-results/**"],

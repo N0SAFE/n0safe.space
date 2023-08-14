@@ -51,11 +51,11 @@ export class SpacesRessourcePostDto extends BaseDto {
   @Type(() => SpacesRessourcePostBodyDto)
   private _body: SpacesRessourcePostBodyDto = new SpacesRessourcePostBodyDto({})
 
-  public get body (): SpacesRessourcePostBodyDto {
+  public get body(): SpacesRessourcePostBodyDto {
     return this._body || new SpacesRessourcePostBodyDto({})
   }
 
-  public set body (value: SpacesRessourcePostBodyDto | undefined) {
+  public set body(value: SpacesRessourcePostBodyDto | undefined) {
     this._body = new SpacesRessourcePostBodyDto(value || {})
   }
 
@@ -65,11 +65,11 @@ export class SpacesRessourcePostDto extends BaseDto {
   @Type(() => SpacesRessourcePostQueryDto)
   private _query: SpacesRessourcePostQueryDto = new SpacesRessourcePostQueryDto({})
 
-  public get query (): SpacesRessourcePostQueryDto {
+  public get query(): SpacesRessourcePostQueryDto {
     return this._query || new SpacesRessourcePostQueryDto({})
   }
 
-  public set query (value: SpacesRessourcePostQueryDto | undefined) {
+  public set query(value: SpacesRessourcePostQueryDto | undefined) {
     this._query = new SpacesRessourcePostQueryDto(value || {})
   }
 }

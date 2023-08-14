@@ -4,43 +4,17 @@
 
 [ [34minfo[39m ]  cleaning up [2m[33m"./build"[22m[39m directory
 [ [34minfo[39m ]  compiling typescript source files
-[ [31merror[39m ]  typescript compiler errors
-[96mcontracts/drive.ts[0m:[93m12[0m:[93m8[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'DisksList'.
+[ [34minfo[39m ]  copy { [2m[33mace,package.json,package-lock.json => build[22m[39m }
+[ [34minfo[39m ]  copy { [2m[33m.adonisrc.json => build[22m[39m }
+[32mCREATE:[39m ace-manifest.json file
+[ [32msuccess[39m ]  built successfully
 
-[7m12[0m   type DisksList = InferDisksFromConfig<typeof driveConfig>
-[7m  [0m [91m       ~~~~~~~~~[0m
-
-  [96m../../node_modules/@adonisjs/drive/build/adonis-typings/drive.d.ts[0m:[93m254[0m:[93m22[0m
-    [7m254[0m     export interface DisksList {
-    [7m   [0m [96m                     ~~~~~~~~~[0m
-    'DisksList' was also declared here.
-[96mcontracts/env.ts[0m:[93m22[0m:[93m8[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'EnvTypes'.
-
-[7m22[0m   type EnvTypes = CustomTypes
-[7m  [0m [91m       ~~~~~~~~[0m
-[ [34minfo[39m ]  cleaning up [2m[33m"./build"[22m[39m directory
-
-  [96m../../node_modules/@adonisjs/env/build/adonis-typings/env.d.ts[0m:[93m7[0m:[93m22[0m
-    [7m7[0m     export interface EnvTypes {
-    [7m [0m [96m                     ~~~~~~~~[0m
-    'EnvTypes' was also declared here.
-[96mcontracts/hash.ts[0m:[93m12[0m:[93m8[0m - [91merror[0m[90m TS2300: [0mDuplicate identifier 'HashersList'.
-
-[7m12[0m   type HashersList = InferListFromConfig<typeof hashConfig>
-[7m  [0m [91m       ~~~~~~~~~~~[0m
-
-  [96m../../node_modules/@adonisjs/hash/build/adonis-typings/hash.d.ts[0m:[93m143[0m:[93m22[0m
-    [7m143[0m     export interface HashersList {
-    [7m   [0m [96m                     ~~~~~~~~~~~[0m
-    'HashersList' was also declared here.
-[96mstart/socket-cluster.ts[0m:[93m23[0m:[93m12[0m - [91merror[0m[90m TS2341: [0mProperty 'removeAllListeners' is private and only accessible within class 'Client'.
-
-[7m23[0m     client.removeAllListeners()
-[7m  [0m [91m           ~~~~~~~~~~~~~~~~~~[0m
-
-
-[41mCannot complete the build process as there are typescript errors. Use "--ignore-ts-errors" flag to ignore Typescript errors[49m
-npm ERR! Lifecycle script `build` failed with error: 
-npm ERR! Error: command failed 
-npm ERR!   in workspace: api@1.0.0 
-npm ERR!   at location: D:\xampp\htdocs\dev\n0safe.space\apps\api 
+[2m╭[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m╮[22m
+[2m│[22m    Run the following commands to start the server in production        [2m│[22m
+[2m│[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m│[22m
+[2m│[22m                                                                        [2m│[22m
+[2m│[22m    [2m❯[22m [36mcd build[39m                                                          [2m│[22m
+[2m│[22m    [2m❯[22m [36mnpm ci --production[39m                                               [2m│[22m
+[2m│[22m    [2m❯[22m [36mnode server.js[39m                                                    [2m│[22m
+[2m│[22m                                                                        [2m│[22m
+[2m╰[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m─[22m[2m╯[22m

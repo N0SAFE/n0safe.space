@@ -1,0 +1,4 @@
+.nuxt
+.output
+.turbo
+node_modules

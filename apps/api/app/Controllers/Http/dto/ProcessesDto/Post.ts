@@ -13,11 +13,11 @@ export class ProcessesRessourcePostDto extends BaseDto {
   @Type(() => ProcessesRessourcePostBodyDto)
   private _body: ProcessesRessourcePostBodyDto = new ProcessesRessourcePostBodyDto({})
 
-  public get body (): ProcessesRessourcePostBodyDto {
+  public get body(): ProcessesRessourcePostBodyDto {
     return this._body || new ProcessesRessourcePostBodyDto({})
   }
 
-  public set body (value: ProcessesRessourcePostBodyDto | undefined) {
+  public set body(value: ProcessesRessourcePostBodyDto | undefined) {
     this._body = new ProcessesRessourcePostBodyDto(value || {})
   }
 
@@ -27,11 +27,11 @@ export class ProcessesRessourcePostDto extends BaseDto {
   @Type(() => ProcessesRessourcePostQueryDto)
   private _query: ProcessesRessourcePostQueryDto = new ProcessesRessourcePostQueryDto({})
 
-  public get query (): ProcessesRessourcePostQueryDto {
+  public get query(): ProcessesRessourcePostQueryDto {
     return this._query || new ProcessesRessourcePostQueryDto({})
   }
 
-  public set query (value: ProcessesRessourcePostQueryDto | undefined) {
+  public set query(value: ProcessesRessourcePostQueryDto | undefined) {
     this._query = new ProcessesRessourcePostQueryDto(value || {})
   }
 }

@@ -55,7 +55,7 @@ const _display = computed(() => {
 })
 
 client.listenOnServerConnection('data', (data) => {
-  console.log("data")
+  console.log('data')
   console.log(data)
   logs.value = [...logs.value, { data: data, eventName: 'data' }]
 })
