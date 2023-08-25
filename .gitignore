@@ -3,3 +3,4 @@ node_modules
 script.sh
 dbdata
 /.temp
+.env
