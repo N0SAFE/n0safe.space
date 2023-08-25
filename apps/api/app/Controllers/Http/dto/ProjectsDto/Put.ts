@@ -13,11 +13,11 @@ export class ProjectsRessourcePutDto extends BaseDto {
   @Type(() => ProjectsRessourcePutBodyDto)
   private _body: ProjectsRessourcePutBodyDto = new ProjectsRessourcePutBodyDto({})
 
-  public get body(): ProjectsRessourcePutBodyDto {
+  public get body (): ProjectsRessourcePutBodyDto {
     return this._body || new ProjectsRessourcePutBodyDto({})
   }
 
-  public set body(value: ProjectsRessourcePutBodyDto | undefined) {
+  public set body (value: ProjectsRessourcePutBodyDto | undefined) {
     this._body = new ProjectsRessourcePutBodyDto(value || {})
   }
 
@@ -27,11 +27,11 @@ export class ProjectsRessourcePutDto extends BaseDto {
   @Type(() => ProjectsRessourcePutQueryDto)
   private _query: ProjectsRessourcePutQueryDto = new ProjectsRessourcePutQueryDto({})
 
-  public get query(): ProjectsRessourcePutQueryDto {
+  public get query (): ProjectsRessourcePutQueryDto {
     return this._query || new ProjectsRessourcePutQueryDto({})
   }
 
-  public set query(value: ProjectsRessourcePutQueryDto | undefined) {
+  public set query (value: ProjectsRessourcePutQueryDto | undefined) {
     this._query = new ProjectsRessourcePutQueryDto(value || {})
   }
 }

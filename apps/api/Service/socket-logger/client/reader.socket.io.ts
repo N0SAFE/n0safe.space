@@ -12,7 +12,7 @@ export interface ReaderGuard {
 }
 
 class LoggerReaderClient extends Client {
-  constructor(
+  constructor (
     info: any,
     options: { space: string; keepAlive: boolean; timeout: number },
     private readonly guard: ReaderGuard = {}

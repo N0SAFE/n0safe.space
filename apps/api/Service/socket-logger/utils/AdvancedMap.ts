@@ -1,9 +1,9 @@
 export default class AdvancedMap<K, V> extends Map<K, V> {
-  constructor(entries?: readonly (readonly [K, V])[] | null) {
+  constructor (entries?: readonly (readonly [K, V])[] | null) {
     super(entries)
   }
 
-  public has(search: ((key: K, value: V, self?: this) => boolean) | K): boolean {
+  public has (search: ((key: K, value: V, self?: this) => boolean) | K): boolean {
     if (typeof search === 'function') {
       search = search as (key: K, value: V, self?: this) => boolean
       for (const [k, v] of this) {
@@ -16,7 +16,7 @@ export default class AdvancedMap<K, V> extends Map<K, V> {
     return super.has(search)
   }
 
-  public find(
+  public find (
     search: ((key: K, value: V, self: this) => boolean) | K
   ): { key: K; value: V } | undefined {
     if (typeof search === 'function') {
@@ -41,7 +41,7 @@ export default class AdvancedMap<K, V> extends Map<K, V> {
     }
   }
 
-  public filter(search: ((key: K, value: V, self: this) => boolean) | K): AdvancedMap<K, V> {
+  public filter (search: ((key: K, value: V, self: this) => boolean) | K): AdvancedMap<K, V> {
     if (typeof search === 'function') {
       search = search as (key: K, value: V, self: this) => boolean
       const results: AdvancedMap<K, V> = new AdvancedMap<K, V>()
@@ -59,7 +59,7 @@ export default class AdvancedMap<K, V> extends Map<K, V> {
     return new AdvancedMap<K, V>([[search, value]])
   }
 
-  public some(search: ((key: K, value: V, self: this) => boolean) | K): boolean {
+  public some (search: ((key: K, value: V, self: this) => boolean) | K): boolean {
     if (typeof search === 'function') {
       search = search as (key: K, value: V, self: this) => boolean
       for (const [k, v] of this) {
@@ -72,7 +72,7 @@ export default class AdvancedMap<K, V> extends Map<K, V> {
     return super.has(search)
   }
 
-  public every(search: ((key: K, value: V, self: this) => boolean) | K): boolean {
+  public every (search: ((key: K, value: V, self: this) => boolean) | K): boolean {
     if (typeof search === 'function') {
       search = search as (key: K, value: V, self: this) => boolean
       for (const [k, v] of this) {

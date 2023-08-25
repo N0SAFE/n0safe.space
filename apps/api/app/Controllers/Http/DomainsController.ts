@@ -2,7 +2,7 @@ import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import Domain from '../../Models/Domain'
 
 export default class DomainsController {
-  public async index({}: HttpContextContract) {
+  public async index ({}: HttpContextContract) {
     return Domain.query().preload('project', (projectQuery) => {
       // preload project for each domain (look at the Domain model)
       projectQuery.preload('processes').preload('domain', (domainQuery) => {
@@ -12,15 +12,15 @@ export default class DomainsController {
     })
   }
 
-  public async create({}: HttpContextContract) {}
+  public async create ({}: HttpContextContract) {}
 
-  public async store({}: HttpContextContract) {}
+  public async store ({}: HttpContextContract) {}
 
-  public async show({}: HttpContextContract) {}
+  public async show ({}: HttpContextContract) {}
 
-  public async edit({}: HttpContextContract) {}
+  public async edit ({}: HttpContextContract) {}
 
-  public async update({}: HttpContextContract) {}
+  public async update ({}: HttpContextContract) {}
 
-  public async destroy({}: HttpContextContract) {}
+  public async destroy ({}: HttpContextContract) {}
 }

@@ -12,7 +12,7 @@ export interface WriterGuard {
 }
 
 class LoggerWriterClient extends Client {
-  constructor(
+  constructor (
     info: any,
     options: { space: string; keepAlive: boolean; timeout: number },
     private readonly guard: WriterGuard

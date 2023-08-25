@@ -1,14 +1,13 @@
 import { AdvancedMap, AdvancedSet } from '../utils'
 import { Connection, Server, Cluster } from './utils'
 import clc from 'cli-color'
-import Logger from '@ioc:Adonis/Core/Logger'
 
 export const log = (message: string, ...args: any[]) => {
-  Logger.info(`[ ${clc.yellow('SOCKET')} ] ` + message, args)
+  console.log(`[ ${clc.yellow('SOCKET')} ] ` + message, args)
 }
 
-// @ts-ignore
 const reservedSpaces = ['server']
+reservedSpaces
 
 type Space = string
 type ConnectionType = 'writer' | 'reader' | 'admin'
@@ -22,24 +21,24 @@ class LoggerConnection extends Connection {
 
 type AsyncGuardResponse = Promise<
   | {
-      success: true
-      message?: string
-    }
+    success: true
+    message?: string
+  }
   | {
-      success: false
-      message: string
-    }
+    success: false
+    message: string
+  }
 >
 
 type GuardResponse =
   | {
-      success: true
-      message?: string
-    }
+    success: true
+    message?: string
+  }
   | {
-      success: false
-      message: string
-    }
+    success: false
+    message: string
+  }
 
 export interface Guard {
   verifyServerConnection?(connection: Connection): AsyncGuardResponse | GuardResponse
@@ -49,12 +48,13 @@ export interface Guard {
 
 export class LoggerCluster extends Cluster<any, SpaceMap> {
   private readonly adminReader: LoggerConnectionSet = new LoggerConnectionSet()
-  constructor(
-    port: number,
-    { portRange = [3001], openOnStart = true }: { portRange: number[]; openOnStart?: boolean },
+  constructor (
+    clusterInfo: any = { port: 65000, path: '/' },
+    serversInfo: any[] = [{ port: 65001, path: '/' }],
+    { openOnStart = true }: { openOnStart?: boolean },
     private guard: Guard = {}
   ) {
-    super(portRange)
+    super(clusterInfo, serversInfo)
 
     guard.verifyServerConnection = guard.verifyServerConnection || (async () => ({ success: true }))
     guard.verifyServerSubscription =
@@ -65,7 +65,7 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     this.createServers(
       () => new SpaceMap(),
       ({ server }: { server: Server; store: SpaceMap }) => {
-        log(clc.green('creating server on port ' + server.port))
+        log(clc.green('creating server on port ' + server.port + server.path()))
         server.onConnection(async (connection: Connection) => {
           const response: GuardResponse = (await this.guard.verifyServerConnection?.(
             connection
@@ -117,6 +117,11 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
                 log(clc.yellow(response.message))
               }
 
+              connection.socket.emit('info', {
+                message: response.message,
+                code: 'SUBSCRIPTION:ALLOWED',
+              })
+
               const { space, type } = data
 
               loggerConnection.space = space
@@ -138,7 +143,10 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
 
                 this.sendToReadersBySpace(
                   space,
-                  { message: 'the writer is connected', code: 'WRITER:CONNECTED' },
+                  {
+                    message: 'the writer is connected',
+                    code: 'WRITER:CONNECTED',
+                  },
                   'info'
                 )
                 loggerConnection.socket.on('data', (data: any) => {
@@ -219,8 +227,11 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
           const server = this.searchServerToUse(space)
 
           log(clc.green('new connection redirected to ' + server.port))
-          this.redirect(loggerConnection.server, server.port)
-          log(clc.yellow('waiting for connection on ' + server.port))
+          this.redirect(loggerConnection.server, {
+            port: server.port as number,
+            path: server.path(),
+          })
+          log(clc.yellow('waiting for connection on ' + server.port + server.path()))
 
           resolve({ port: server.port, space })
         })
@@ -230,18 +241,18 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     })
 
     if (openOnStart) {
-      this.open(port)
+      this.open(clusterInfo.port)
     }
   }
 
-  public open(port: number) {
+  public open (port: number) {
     super.open(port)
     log('opening cluster on port ' + port)
     log('waiting for connections...')
     return this
   }
 
-  public getSpaceMapByServer(server: Server): SpaceMap {
+  public getSpaceMapByServer (server: Server): SpaceMap {
     const space = this.servers.get(server)
     if (!space) {
       throw new Error('space map not found')
@@ -249,8 +260,13 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     return space
   }
 
-  public getLoggerConnectionSetBySpace(space: Space): LoggerConnectionSet {
-    const server = this.servers.find((_, value) => value.has((key, _) => key === space))?.key
+  public getLoggerConnectionSetBySpace (space: Space): LoggerConnectionSet {
+    const server = this.servers.find((_, value) =>
+      value.has((key, _) => {
+        _
+        return key === space
+      })
+    )?.key
     if (!server) {
       throw new Error('server not found')
     }
@@ -262,7 +278,7 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     return loggerConnectionSet
   }
 
-  public getSpaceByLoggerConnection(connection: LoggerConnection): Space | undefined {
+  public getSpaceByLoggerConnection (connection: LoggerConnection): Space | undefined {
     const server = this.getServerByLoggerConnection(connection)
     if (!server) {
       return
@@ -275,7 +291,7 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     return space
   }
 
-  public getServerByLoggerConnection(connection: LoggerConnection): Server | undefined {
+  public getServerByLoggerConnection (connection: LoggerConnection): Server | undefined {
     const server = this.servers.find((_, value) =>
       value.has((_, value) => value.has(connection))
     )?.key
@@ -285,16 +301,16 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     return server
   }
 
-  public getServerBySpace(space: Space): Server | undefined {
+  public getServerBySpace (space: Space): Server | undefined {
     const server = this.servers.find((_, value) => value.has(space))?.key
     return server
   }
 
-  public IsSpaceExists(space: Space) {
+  public IsSpaceExists (space: Space) {
     return this.servers.has((_: Server, value: SpaceMap) => value.has(space))
   }
 
-  public deleteSpaceIfEmpty(space: Space) {
+  public deleteSpaceIfEmpty (space: Space) {
     const server = this.getServerBySpace(space)
     if (!server) {
       return
@@ -308,7 +324,7 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     }
   }
 
-  public removeByConnection(connection: LoggerConnection) {
+  public removeByConnection (connection: LoggerConnection) {
     const space = this.getSpaceByLoggerConnection(connection)
     if (!space) {
       return
@@ -323,7 +339,7 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     this.deleteSpaceIfEmpty(space)
   }
 
-  public removeWriterBySpace(space: Space) {
+  public removeWriterBySpace (space: Space) {
     const connectionsSet = this.getLoggerConnectionSetBySpace(space)
     if (!connectionsSet) {
       return
@@ -337,7 +353,7 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     this.deleteSpaceIfEmpty(space)
   }
 
-  public removeReadersBySpace(space: Space) {
+  public removeReadersBySpace (space: Space) {
     const connectionsSet = this.getLoggerConnectionSetBySpace(space)
     if (!connectionsSet) {
       return
@@ -351,7 +367,7 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     this.deleteSpaceIfEmpty(space)
   }
 
-  public removeSpace(space: Space) {
+  public removeSpace (space: Space) {
     log(clc.red('removing space ' + space))
     const server = this.getServerBySpace(space)
     if (!server) {
@@ -364,7 +380,7 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     spaceMap.delete(space)
   }
 
-  public removeSpaceByConnection(connection: LoggerConnection) {
+  public removeSpaceByConnection (connection: LoggerConnection) {
     const space = this.getSpaceByLoggerConnection(connection)
     if (!space) {
       return
@@ -380,47 +396,47 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     }
   }
 
-  public getWritersBySpace(space: Space): LoggerConnectionSet {
+  public getWritersBySpace (space: Space): LoggerConnectionSet {
     const connectionsSet = this.getLoggerConnectionSetBySpace(space)
     const writer = connectionsSet.filter((connection) => connection.type === 'writer')
     return writer
   }
 
-  public getReadersBySpace(space: Space): LoggerConnectionSet {
+  public getReadersBySpace (space: Space): LoggerConnectionSet {
     const connectionsSet = this.getLoggerConnectionSetBySpace(space)
     const readers = connectionsSet.filter((connection) => connection.type === 'reader')
     return readers
   }
 
-  public getAdmins(): LoggerConnectionSet {
+  public getAdmins (): LoggerConnectionSet {
     return this.adminReader
   }
 
-  public getAdminsBySpace(space: Space): LoggerConnectionSet {
+  public getAdminsBySpace (space: Space): LoggerConnectionSet {
     const admins = this.getAdmins().filter((connection) => connection.space === space)
     return admins
   }
 
-  public getAdminsByServer(server: Server): LoggerConnectionSet {
+  public getAdminsByServer (server: Server): LoggerConnectionSet {
     const admins = this.getAdmins().filter((connection) => connection.server === server)
     return admins
   }
 
-  public getAdminsBySpaceAndServer(space: Space, server: Server): LoggerConnectionSet {
+  public getAdminsBySpaceAndServer (space: Space, server: Server): LoggerConnectionSet {
     const admins = this.getAdmins().filter(
       (connection) => connection.space === space && connection.server === server
     )
     return admins
   }
 
-  public getAdminsBySpaceOrServer(space: Space, server: Server): LoggerConnectionSet {
+  public getAdminsBySpaceOrServer (space: Space, server: Server): LoggerConnectionSet {
     const admins = this.getAdmins().filter(
       (connection) => connection.space === space || connection.server === server
     )
     return admins
   }
 
-  public sendToReadersBySpace(space: Space, data: any, evt = 'data') {
+  public sendToReadersBySpace (space: Space, data: any, evt = 'data') {
     const readers = this.getReadersBySpace(space)
     const admins = this.getAdminsBySpace(space)
     admins.forEach((connection) => {
@@ -436,7 +452,7 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     })
   }
 
-  public sendToWriterBySpace(space: Space, data: any, evt = 'data') {
+  public sendToWriterBySpace (space: Space, data: any, evt = 'data') {
     const writer = this.getWritersBySpace(space)
     const admins = this.getAdminsBySpace(space)
     admins.forEach((connection) => {
@@ -452,7 +468,7 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     })
   }
 
-  public readFromWriterBySpace(space: Space, callback: (data: any) => void, evt = 'data') {
+  public readFromWriterBySpace (space: Space, callback: (data: any) => void, evt = 'data') {
     const writer = this.getWritersBySpace(space)
     const admins = this.getAdminsBySpace(space)
     writer.forEach((connection) => {
@@ -470,7 +486,7 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     })
   }
 
-  public readFromReadersBySpace(space: Space, callback: (data: any) => void, evt = 'data') {
+  public readFromReadersBySpace (space: Space, callback: (data: any) => void, evt = 'data') {
     const readers = this.getReadersBySpace(space)
     const admins = this.getAdminsBySpace(space)
     readers.forEach((connection) => {
@@ -495,7 +511,7 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
   //     }, {});
   // }
 
-  public searchServerToUse(space: Space): Server {
+  public searchServerToUse (space: Space): Server {
     const admins = this.getAdmins()
     const server = this.getServerBySpace(space)
     admins.forEach((connection) => {
@@ -523,7 +539,7 @@ export class LoggerCluster extends Cluster<any, SpaceMap> {
     }
   }
 
-  public addSpaceToServer(server: Server, space: Space): LoggerConnectionSet {
+  public addSpaceToServer (server: Server, space: Space): LoggerConnectionSet {
     const admins = this.getAdmins()
     if (!this.servers.get(server)) {
       admins.forEach((connection) => {

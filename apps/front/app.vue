@@ -9,6 +9,8 @@
 <script setup>
 import { userStore } from '@/store/user.store'
 
+const config = useRuntimeConfig()
 const store = userStore()
 const isLoading = computed(() => !store.state.isInitialized)
+console.log(config.app)
 </script>

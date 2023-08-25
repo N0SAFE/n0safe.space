@@ -15,7 +15,7 @@ class LoggerWriterClient extends Client {
   constructor(
     info: any,
     options: { space: string; keepAlive: boolean; timeout: number },
-    private readonly guard: WriterGuard
+    private readonly guard: WriterGuard,
   ) {
     super(info)
     this.guard.sendRequestPayloadOnClusterConnect =
@@ -30,7 +30,7 @@ class LoggerWriterClient extends Client {
         this.guard.sendRequestPayloadOnClusterConnect?.({
           type: 'writer',
           space: options.space,
-        })
+        }),
       )
     })
 
@@ -41,7 +41,7 @@ class LoggerWriterClient extends Client {
         this.guard.sendRequestPayloadOnServerConnect?.({
           type: 'writer',
           space: options.space,
-        })
+        }),
       )
     })
 

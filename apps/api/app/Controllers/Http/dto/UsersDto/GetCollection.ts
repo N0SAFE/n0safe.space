@@ -13,11 +13,11 @@ export class UsersRessourceGetCollectionDto extends BaseDto {
   @Type(() => UsersRessourceGetCollectionBodyDto)
   private _body: UsersRessourceGetCollectionBodyDto = new UsersRessourceGetCollectionBodyDto({})
 
-  public get body(): UsersRessourceGetCollectionBodyDto {
+  public get body (): UsersRessourceGetCollectionBodyDto {
     return this._body || new UsersRessourceGetCollectionBodyDto({})
   }
 
-  public set body(value: UsersRessourceGetCollectionBodyDto | undefined) {
+  public set body (value: UsersRessourceGetCollectionBodyDto | undefined) {
     this._body = new UsersRessourceGetCollectionBodyDto(value || {})
   }
 
@@ -27,11 +27,11 @@ export class UsersRessourceGetCollectionDto extends BaseDto {
   @Type(() => UsersRessourceGetCollectionQueryDto)
   private _query: UsersRessourceGetCollectionQueryDto = new UsersRessourceGetCollectionQueryDto({})
 
-  public get query(): UsersRessourceGetCollectionQueryDto {
+  public get query (): UsersRessourceGetCollectionQueryDto {
     return this._query || new UsersRessourceGetCollectionQueryDto({})
   }
 
-  public set query(value: UsersRessourceGetCollectionQueryDto | undefined) {
+  public set query (value: UsersRessourceGetCollectionQueryDto | undefined) {
     this._query = new UsersRessourceGetCollectionQueryDto(value || {})
   }
 }

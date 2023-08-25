@@ -1,61 +1,27 @@
 import { Server as _Server } from 'socket.io'
 import Connection from './Connection'
 import { AdvancedSocketMethods } from '../../utils'
+import { IsHttpServer } from '../../utils/types'
+import { Server as HttpServer } from 'http'
 
 export default class Server extends _Server implements AdvancedSocketMethods {
+  public port: number | undefined
   public connections = new Set<Connection>()
-  public port: number
-  constructor(...args: [] | [any] | [number, any]) {
-    let port: number | undefined
-    const Targs = args as any[]
-    if (Targs.length === 0) {
-      Targs.push({
-        allowRequest: (_: any, callback: any) => {
-          callback(null, true)
-        },
-        cors: {
-          origin: '*',
-        },
-      })
-    } else if (Targs.length === 1) {
-      if (typeof Targs[0] === 'number') {
-        Targs.push({
-          allowRequest: (_: any, callback: any) => {
-            callback(null, true)
-          },
-          cors: {
-            origin: '*',
-          },
-        })
-        port = Targs[0]
-      } else if (typeof Targs[0] === 'object') {
-        Targs[0].allowRequest = (_: any, callback: any) => {
-          callback(null, true)
-        }
-        args[0].cors = {
-          origin: '*',
-        }
-      } else {
-        throw new Error('invalid argument')
-      }
-    } else if (Targs.length === 2) {
-      if (typeof Targs[0] === 'number' && typeof Targs[1] === 'object') {
-        Targs[1].allowRequest = (_: any, callback: any) => {
-          callback(null, true)
-        }
-        args[1].cors = {
-          origin: '*',
-        }
-        port = Targs[0]
-      } else {
-        throw new Error('invalid argument')
-      }
-    } else {
-      throw new Error('invalid argument')
-    }
-    super(...Targs)
+  public opened = false
 
-    this.port = port as number
+  constructor (...args: [] | [...any] | [number, ...any]) {
+    let Targs = args as any[]
+    let srv: number | undefined | IsHttpServer
+    if (typeof args[0] === 'number' || args[0] instanceof HttpServer) {
+      srv = args[0]
+      Targs = args.slice(1)
+    }
+    Targs[0].path = Targs[0].path[0] === '/' ? Targs[0].path : '/' + Targs[0].path
+    super(...Targs)
+    if (srv) {
+      this.open(srv)
+    }
+
     this.on('connection', (socket) => {
       const connection = new Connection(this, socket)
       this.connections.add(connection)
@@ -65,7 +31,7 @@ export default class Server extends _Server implements AdvancedSocketMethods {
     })
   }
 
-  public onConnection(callback: (connection: Connection) => any) {
+  public onConnection (callback: (connection: Connection) => any) {
     this.on('connection', (socket) => {
       const connection = new Connection(this, socket)
       this.emit('connection', {
@@ -75,36 +41,38 @@ export default class Server extends _Server implements AdvancedSocketMethods {
     })
   }
 
-  public open(port) {
-    this.listen(port, {
-      cors: {
-        origin: '*',
-      },
-    })
+  public open (srv: number | HttpServer) {
+    this.opened = true
+    if (typeof srv === 'number') {
+      this.port = srv
+    } else if (srv instanceof HttpServer) {
+      const httpServer = srv as IsHttpServer
+      this.port = httpServer.port
+    }
+    this.listen(srv)
   }
 
-  public awaitFor(eventName, _callback: (...args) => boolean = () => true) {
-    const self = this
+  public awaitFor (eventName, _callback: (...args) => boolean = () => true) {
     const callback = function (...args) {
       return _callback(...args)
     }
 
     return new Promise((resolve) => {
-      self.on(eventName, (data) => {
+      this.on(eventName, (data) => {
         if (callback(data)) {
           resolve(data)
-          self.off(eventName, callback)
+          this.off(eventName, callback)
         }
       })
     })
   }
 
-  public request(ev: string, ...args: any) {
+  public request (ev: string, ...args: any) {
     this.emit(ev, ...args)
     return this.awaitFor(ev)
   }
 
-  public findConnection(search) {
+  public findConnection (search) {
     Array.from(this.connections).find(search)
   }
 }

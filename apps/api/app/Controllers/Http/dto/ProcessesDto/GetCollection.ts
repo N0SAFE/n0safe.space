@@ -12,13 +12,13 @@ export class ProcessesRessourceGetCollectionDto extends BaseDto {
   @ValidateNested()
   @Type(() => ProcessesRessourceGetCollectionBodyDto)
   private _body: ProcessesRessourceGetCollectionBodyDto =
-    new ProcessesRessourceGetCollectionBodyDto({})
+      new ProcessesRessourceGetCollectionBodyDto({})
 
-  public get body(): ProcessesRessourceGetCollectionBodyDto {
+  public get body (): ProcessesRessourceGetCollectionBodyDto {
     return this._body || new ProcessesRessourceGetCollectionBodyDto({})
   }
 
-  public set body(value: ProcessesRessourceGetCollectionBodyDto | undefined) {
+  public set body (value: ProcessesRessourceGetCollectionBodyDto | undefined) {
     this._body = new ProcessesRessourceGetCollectionBodyDto(value || {})
   }
 
@@ -27,13 +27,13 @@ export class ProcessesRessourceGetCollectionDto extends BaseDto {
   @ValidateNested()
   @Type(() => ProcessesRessourceGetCollectionQueryDto)
   private _query: ProcessesRessourceGetCollectionQueryDto =
-    new ProcessesRessourceGetCollectionQueryDto({})
+      new ProcessesRessourceGetCollectionQueryDto({})
 
-  public get query(): ProcessesRessourceGetCollectionQueryDto {
+  public get query (): ProcessesRessourceGetCollectionQueryDto {
     return this._query || new ProcessesRessourceGetCollectionQueryDto({})
   }
 
-  public set query(value: ProcessesRessourceGetCollectionQueryDto | undefined) {
+  public set query (value: ProcessesRessourceGetCollectionQueryDto | undefined) {
     this._query = new ProcessesRessourceGetCollectionQueryDto(value || {})
   }
 }

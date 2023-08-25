@@ -13,11 +13,11 @@ export class UsersRessourceDeleteDto extends BaseDto {
   @Type(() => UsersRessourceDeleteBodyDto)
   private _body: UsersRessourceDeleteBodyDto = new UsersRessourceDeleteBodyDto({})
 
-  public get body(): UsersRessourceDeleteBodyDto {
+  public get body (): UsersRessourceDeleteBodyDto {
     return this._body || new UsersRessourceDeleteBodyDto({})
   }
 
-  public set body(value: UsersRessourceDeleteBodyDto | undefined) {
+  public set body (value: UsersRessourceDeleteBodyDto | undefined) {
     this._body = new UsersRessourceDeleteBodyDto(value || {})
   }
 
@@ -27,11 +27,11 @@ export class UsersRessourceDeleteDto extends BaseDto {
   @Type(() => UsersRessourceDeleteQueryDto)
   private _query: UsersRessourceDeleteQueryDto = new UsersRessourceDeleteQueryDto({})
 
-  public get query(): UsersRessourceDeleteQueryDto {
+  public get query (): UsersRessourceDeleteQueryDto {
     return this._query || new UsersRessourceDeleteQueryDto({})
   }
 
-  public set query(value: UsersRessourceDeleteQueryDto | undefined) {
+  public set query (value: UsersRessourceDeleteQueryDto | undefined) {
     this._query = new UsersRessourceDeleteQueryDto(value || {})
   }
 }

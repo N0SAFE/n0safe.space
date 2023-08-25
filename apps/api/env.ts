@@ -27,6 +27,6 @@ export default Env.rules({
   MYSQL_USER: Env.schema.string(),
   MYSQL_PASSWORD: Env.schema.string.optional(),
   MYSQL_DB_NAME: Env.schema.string(),
-  SOCKET_CLUSTER_PORT: Env.schema.number(),
-  SOCKET_CLUSTER_SERVER_PORT_RANGE: Env.schema.string(),
+  SOCKET_CLUSTER_INFO: Env.schema.string(),
+  SOCKET_CLUSTER_SERVERS_INFO: Env.schema.string(),
 })

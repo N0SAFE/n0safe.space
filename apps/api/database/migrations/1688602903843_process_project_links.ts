@@ -3,7 +3,7 @@ import BaseSchema from '@ioc:Adonis/Lucid/Schema'
 export default class extends BaseSchema {
   protected processProjectLinksTable = 'process_project_links'
 
-  public async up() {
+  public async up () {
     this.schema.createTable(this.processProjectLinksTable, (table) => {
       table.increments('id')
       table
@@ -21,7 +21,7 @@ export default class extends BaseSchema {
     })
   }
 
-  public async down() {
+  public async down () {
     this.schema.dropTable(this.processProjectLinksTable)
   }
 }

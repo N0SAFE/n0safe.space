@@ -7,7 +7,7 @@
     "dev:cli-logger": "npx ts-node ../../socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run dev\" --space=cli-api",
     "start": "npx ts-node ../../socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run _start\" --space=cli-api",
     "_start": "node checkPort.js node build/server.js",
-    "build": "node ace build --production",
+    "build": "npm install --package-lock-only && node ace build --production && cd build && npm ci --production",
     "test": "npm run db:unmigrate && node ace test && npm run db:fresh:seed",
     "lint": "eslint . --ext=.ts --fix",
     "format": "prettier --write .",

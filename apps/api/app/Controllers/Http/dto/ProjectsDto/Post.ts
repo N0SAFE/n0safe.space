@@ -34,11 +34,11 @@ export class ProjectsRessourcePostDto extends BaseDto {
   @Type(() => ProjectsRessourcePostBodyDto)
   private _body: ProjectsRessourcePostBodyDto = new ProjectsRessourcePostBodyDto({})
 
-  public get body(): ProjectsRessourcePostBodyDto {
+  public get body (): ProjectsRessourcePostBodyDto {
     return this._body || new ProjectsRessourcePostBodyDto({})
   }
 
-  public set body(value: ProjectsRessourcePostBodyDto | undefined) {
+  public set body (value: ProjectsRessourcePostBodyDto | undefined) {
     this._body = new ProjectsRessourcePostBodyDto(value || {})
   }
 
@@ -48,11 +48,11 @@ export class ProjectsRessourcePostDto extends BaseDto {
   @Type(() => ProjectsRessourcePostQueryDto)
   private _query: ProjectsRessourcePostQueryDto = new ProjectsRessourcePostQueryDto({})
 
-  public get query(): ProjectsRessourcePostQueryDto {
+  public get query (): ProjectsRessourcePostQueryDto {
     return this._query || new ProjectsRessourcePostQueryDto({})
   }
 
-  public set query(value: ProjectsRessourcePostQueryDto | undefined) {
+  public set query (value: ProjectsRessourcePostQueryDto | undefined) {
     this._query = new ProjectsRessourcePostQueryDto(value || {})
   }
 }

@@ -2,13 +2,7 @@ import { default as io, Socket } from 'socket.io-client'
 import { EventEmitter } from 'events'
 import { AdvancedSocketMethods } from '../../utils'
 import clc from 'cli-color'
-
-export interface IsInfo {
-  host: string
-  port: number
-  path: string
-  protocol: string
-}
+import type { IsInfo } from '../../utils/types'
 
 export interface IsAutorestartBehavior {
   restartOnDisconnect?: {
@@ -84,14 +78,20 @@ export default class Client implements AdvancedSocketMethods {
     return this
   }
 
-  public listenOnClusterConnection(evt: string, callback: (socket: Socket) => void) {
+  public listenOnClusterConnection(
+    evt: string,
+    callback: (socket: Socket) => void,
+  ) {
     this.onClusterConnect(() => {
       this.on(evt, callback)
     })
     return this
   }
 
-  public listenOnServerConnection(evt: string, callback: (socket: Socket) => void) {
+  public listenOnServerConnection(
+    evt: string,
+    callback: (socket: Socket) => void,
+  ) {
     this.onServerConnect(() => {
       this.on(evt, callback)
     })
@@ -115,15 +115,26 @@ export default class Client implements AdvancedSocketMethods {
       this.socket.close()
       delete this.socket
     }
+    const path =
+      typeof this.info.path === 'string'
+        ? this.info.path?.[0] === '/'
+          ? this.info.path
+          : '/' + this.info.path
+        : '/'
     this.socket = io(
-      `${this.info.protocol}://${this.info.host}${this.info.port ? `:${this.info.port}` : ''}${this.info.path}`,
+      `${this.info.protocol}://${this.info.host}${
+        this.info.port ? `:${this.info.port}` : ''
+      }`,
       {
+        path: path,
         autoConnect: true,
         reconnection: true,
-      }
+      },
     )
     console.log(
-      `connecting to ${this.info.protocol}://${this.info.host}${this.info.port ? `:${this.info.port}` : ''}${this.info.path}`
+      `connecting to ${this.info.protocol}://${this.info.host}${
+        this.info.port ? `:${this.info.port}` : ''
+      }${path}`,
     )
     this.onRedirect((info) => {
       this.connect(info)
@@ -150,10 +161,12 @@ export default class Client implements AdvancedSocketMethods {
 
   private removeAllListeners(
     list: (string | (() => void))[] = [],
-    listType: 'black' | 'white' = 'black'
+    listType: 'black' | 'white' = 'black',
   ) {
     const socket = this.socket as any
-    const callbacksList: [string, (() => void)[]][] = Object.entries(socket._callbacks)
+    const callbacksList: [string, (() => void)[]][] = Object.entries(
+      socket._callbacks,
+    )
 
     callbacksList.forEach(([event, callbacks]) => {
       if (event.startsWith('$')) {
@@ -163,7 +176,9 @@ export default class Client implements AdvancedSocketMethods {
         if (list.includes(event) || list.includes(callback)) {
           if (
             listType === 'white' &&
-            ![this.connectErrorFn, this.connectFn, this.disconnectFn].includes(callback)
+            ![this.connectErrorFn, this.connectFn, this.disconnectFn].includes(
+              callback,
+            )
           ) {
             socket.off(event, callback)
           }
@@ -171,7 +186,9 @@ export default class Client implements AdvancedSocketMethods {
         }
         if (
           listType === 'black' &&
-          ![this.connectErrorFn, this.connectFn, this.disconnectFn].includes(callback)
+          ![this.connectErrorFn, this.connectFn, this.disconnectFn].includes(
+            callback,
+          )
         ) {
           socket.off(event, callback)
         }
@@ -258,7 +275,10 @@ export default class Client implements AdvancedSocketMethods {
     return this.socket?.id
   }
 
-  public awaitFor(ev: string, callback?: (...args: any[]) => boolean): Promise<any> {
+  public awaitFor(
+    ev: string,
+    callback?: (...args: any[]) => boolean,
+  ): Promise<any> {
     return new Promise((resolve) => {
       if (this.socket) {
         this.socket.on(ev, (...args: any[]) => {

@@ -4,30 +4,28 @@ import HttpContext from '@ioc:Adonis/Core/HttpContext'
 import Client from '../Service/socket-logger/client/utils/Client'
 import clc from 'cli-color'
 
-const clusterPort = Env.get('SOCKET_CLUSTER_PORT', 4000)
-const jsonServerPortRange = Env.get('SOCKET_CLUSTER_SERVER_PORT_RANGE', '[4000]')
-
-const serverPortRange = JSON.parse(jsonServerPortRange)
-if (!Array.isArray(serverPortRange)) {
-  throw new Error('SOCKET_CLUSTER_SERVER_PORT_RANGE must be an array')
-}
+const clusterInfo = JSON.parse(Env.get('SOCKET_CLUSTER_INFO', '{"port": 4000, "path": "/"}'))
+const serversInfo = JSON.parse(
+  Env.get('SOCKET_CLUSTER_SERVERS_INFO', '[{"port": 4000, "path": "/1"}]')
+)
 
 new Promise((resolve, reject) => {
   const client = new Client()
   client.onClusterConnect(async () => {
     reject(new Error('a cluster is already running'))
   })
-  client.connect({ host: 'localhost', port: clusterPort, path: '', protocol: 'http' })
+  client.connect({ host: 'localhost', protocol: 'http', ...clusterInfo })
   setTimeout(() => {
     resolve(true)
     client.disconnect()
   }, 500)
 })
   .then(function () {
-    console.log(clc.red('no cluster running, starting one'))
+    console.log(clc.green('no cluster running, starting one'))
     createCluster(
-      clusterPort,
-      { portRange: serverPortRange, openOnStart: true },
+      clusterInfo,
+      serversInfo,
+      { openOnStart: true },
       {
         // @ts-ignore
         verifyServerSubscription: async (connection, data) => {
@@ -47,7 +45,7 @@ new Promise((resolve, reject) => {
           } catch {
             return {
               success: false,
-              message: "Can't authenticate, invalid token",
+              message: 'Can\'t authenticate, invalid token',
             }
           }
 
@@ -59,5 +57,5 @@ new Promise((resolve, reject) => {
     )
   })
   .catch(function () {
-    console.log(clc.green('a cluster is already running'))
+    console.log(clc.red('a cluster is already running'))
   })

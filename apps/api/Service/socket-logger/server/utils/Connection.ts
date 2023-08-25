@@ -3,7 +3,7 @@ import Server from './Server'
 export default class Connection {
   public server: Server
   public socket: any
-  constructor(...args: [Server, any] | [Connection]) {
+  constructor (...args: [Server, any] | [Connection]) {
     if (args.length === 1) {
       const connection = args[0]
       this.server = connection.server

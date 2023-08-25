@@ -15,7 +15,7 @@ class LoggerReaderClient extends Client {
   constructor(
     info: any,
     options: { space: string; keepAlive: boolean; timeout: number },
-    private readonly guard: ReaderGuard = {}
+    private readonly guard: ReaderGuard = {},
   ) {
     super(info)
 
@@ -31,7 +31,7 @@ class LoggerReaderClient extends Client {
         this.guard.sendRequestPayloadOnClusterConnect?.({
           type: 'reader',
           space: options.space,
-        })
+        }),
       )
     })
 
@@ -42,7 +42,7 @@ class LoggerReaderClient extends Client {
         this.guard.sendRequestPayloadOnServerConnect?.({
           type: 'reader',
           space: options.space,
-        })
+        }),
       )
     })
 

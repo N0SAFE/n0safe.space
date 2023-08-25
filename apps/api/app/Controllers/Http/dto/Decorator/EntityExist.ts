@@ -3,7 +3,7 @@ import { BaseModel } from '@ioc:Adonis/Lucid/Orm'
 
 @ValidatorConstraint({ async: true })
 export class EntityExistConstraint {
-  public async validate(value: number | number[], args: ValidationArguments) {
+  public async validate (value: number | number[], args: ValidationArguments) {
     const [relatedModel] = args.constraints
     if (!Array.isArray(value)) {
       if (typeof value === 'number') {
@@ -17,7 +17,7 @@ export class EntityExistConstraint {
   }
 }
 
-export function EntityExist(model: typeof BaseModel) {
+export function EntityExist (model: typeof BaseModel) {
   return function (object: Object, propertyName: string) {
     registerDecorator({
       name: 'entityExist',

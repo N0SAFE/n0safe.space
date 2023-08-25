@@ -13,11 +13,11 @@ export class SpacesRessourcePutDto extends BaseDto {
   @Type(() => SpacesRessourcePutBodyDto)
   private _body: SpacesRessourcePutBodyDto = new SpacesRessourcePutBodyDto({})
 
-  public get body(): SpacesRessourcePutBodyDto {
+  public get body (): SpacesRessourcePutBodyDto {
     return this._body || new SpacesRessourcePutBodyDto({})
   }
 
-  public set body(value: SpacesRessourcePutBodyDto | undefined) {
+  public set body (value: SpacesRessourcePutBodyDto | undefined) {
     this._body = new SpacesRessourcePutBodyDto(value || {})
   }
 
@@ -27,11 +27,11 @@ export class SpacesRessourcePutDto extends BaseDto {
   @Type(() => SpacesRessourcePutQueryDto)
   private _query: SpacesRessourcePutQueryDto = new SpacesRessourcePutQueryDto({})
 
-  public get query(): SpacesRessourcePutQueryDto {
+  public get query (): SpacesRessourcePutQueryDto {
     return this._query || new SpacesRessourcePutQueryDto({})
   }
 
-  public set query(value: SpacesRessourcePutQueryDto | undefined) {
+  public set query (value: SpacesRessourcePutQueryDto | undefined) {
     this._query = new SpacesRessourcePutQueryDto(value || {})
   }
 }

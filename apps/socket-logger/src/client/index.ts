@@ -2,7 +2,10 @@ import { spawn, ChildProcessWithoutNullStreams } from 'child_process'
 import clc from 'cli-color'
 import LoggerWriterClient, { WriterGuard } from './writer.socker.io'
 import LoggerReaderClient, { ReaderGuard } from './reader.socket.io'
-export function createAdminReader() {}
+
+export function createAdminReader() {
+  return undefined
+}
 
 export function createReader(
   {
@@ -22,12 +25,12 @@ export function createReader(
     keepAlive?: boolean
     timeout?: number
   },
-  guard?: ReaderGuard
+  guard?: ReaderGuard,
 ): LoggerReaderClient {
   return new LoggerReaderClient(
     { port, host, protocol, path },
     { space, keepAlive, timeout },
-    guard
+    guard,
   )
 }
 
@@ -49,12 +52,12 @@ export function createWriter(
     keepAlive?: boolean
     timeout?: number
   },
-  guard: WriterGuard = {}
+  guard: WriterGuard = {},
 ): LoggerWriterClient {
   return new LoggerWriterClient(
     { port, host, protocol, path },
     { space, keepAlive, timeout },
-    guard
+    guard,
   )
 }
 
@@ -67,6 +70,7 @@ export function createServiceWriter(
     space = 'default',
     keepAlive = true,
     timeout = 1000,
+    wait = false,
   }: {
     port: number
     host: string
@@ -75,11 +79,55 @@ export function createServiceWriter(
     space?: string
     keepAlive?: boolean
     timeout?: number
+    wait?: boolean
   },
   guard: WriterGuard = {},
-  { command }: { command: string }
-): {writer: LoggerWriterClient, subProcess: ChildProcessWithoutNullStreams} {
-  const writer = createWriter({ port, host, protocol, path, space, keepAlive, timeout }, guard)
+  { command }: { command: string },
+): Promise<{
+  writer: LoggerWriterClient
+  subProcess: ChildProcessWithoutNullStreams
+}> {
+  const writer = createWriter(
+    { port, host, protocol, path, space, keepAlive, timeout },
+    guard,
+  )
+  if (wait) {
+    return new Promise((resolve) => {
+      writer.onServerConnect(() => {
+        resolve(
+          writer
+            .awaitFor('info', function (data) {
+              return data.code === 'SUBSCRIPTION:ALLOWED'
+            })
+            .then(function () {
+              const subProcess = spawn(command, {
+                shell: true,
+                stdio: 'pipe',
+                env: {
+                  ...process.env,
+                },
+              })
+              subProcess.on('exit', (code) => {
+                console.log(clc.blue('Process exited with code ' + code))
+                writer.emit('data', {
+                  type: 'exit',
+                  message: 'Process exited with code ' + code,
+                  code,
+                })
+                if (code !== null) {
+                  process.exit(code)
+                }
+              })
+              subProcess.stdout.on('data', (data) => {
+                writer.emit('data', data.toString())
+              })
+              return { writer, subProcess }
+            }),
+        )
+      })
+    })
+  }
+
   const subProcess = spawn(command, {
     shell: true,
     stdio: 'pipe',
@@ -101,7 +149,7 @@ export function createServiceWriter(
   subProcess.stdout.on('data', (data) => {
     writer.emit('data', data.toString())
   })
-  return {writer, subProcess}
+  return Promise.resolve({ writer, subProcess })
 }
 
 export { LoggerReaderClient, LoggerWriterClient }

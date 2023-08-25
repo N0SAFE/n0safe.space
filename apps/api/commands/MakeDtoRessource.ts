@@ -40,21 +40,21 @@ export default class MakeDtoRessource extends BaseCommand {
 
   public methodList: string[] = ['Delete', 'Get', 'GetCollection', 'Patch', 'Post', 'Put']
 
-  public fileTemplate(method) {
+  public fileTemplate (method) {
     const tempName = this.name.replace(/Controller$/, '').replace(/Dto$/, '')
     const name = tempName.charAt(0).toUpperCase() + tempName.slice(1)
     return fileTemplate(name, method)
   }
 
-  public baseDtoTemplate() {
+  public baseDtoTemplate () {
     return baseDtoTemplate()
   }
 
-  public entityExistDecoratorTemplate() {
+  public entityExistDecoratorTemplate () {
     return entityExistDecoratorTemplate()
   }
 
-  public async run() {
+  public async run () {
     const appRoot = this.application.appRoot
     const dtoDir = resolve(appRoot, this.location, 'dto')
     const relativeDtoDir = resolve(
@@ -123,7 +123,7 @@ export default class MakeDtoRessource extends BaseCommand {
   }
 }
 
-export function entityExistDecoratorTemplate() {
+export function entityExistDecoratorTemplate () {
   return `import { registerDecorator, ValidatorConstraint, ValidationArguments } from 'class-validator'
 import { BaseModel } from '@ioc:Adonis/Lucid/Orm'
 
@@ -163,7 +163,7 @@ export function EntityExist(model: typeof BaseModel) {
 `
 }
 
-export function baseDtoTemplate() {
+export function baseDtoTemplate () {
   return `import { validate } from 'class-validator'
 
 export class BaseDto {
@@ -192,7 +192,7 @@ export class BaseDto {
 `
 }
 
-export function fileTemplate(name, method) {
+export function fileTemplate (name, method) {
   return `import {
   IsDefined,
   IsObject,

@@ -7,19 +7,20 @@
     "apps/*"
   ],
   "scripts": {
-    "dev": "dotenv turbo run dev --parallel --node-colors",
-    "dev:cli-logger": "npx ts-node socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run _dev:cli-logger\" --space=cli-main",
-    "_dev:cli-logger": "dotenv turbo run dev:cli-logger --parallel --node-colors --fail-fast",
-    "open:dev": "dotenv turbo run open:dev --fail-fast",
-    "start": "npx ts-node socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run _start\" --space=cli-main",
-    "_start": "dotenv turbo run start --parallel --fail-fast",
-    "build": "dotenv turbo run build --parallel --fail-fast",
-    "test": "dotenv turbo run test --color --output-logs=new-only --fail-fast",
-    "format": "dotenv turbo run format --fail-fast",
-    "lint": "dotenv turbo run lint --fail-fast",
-    "update": "dotenv turbo run update --fail-fast",
-    "open:all": "dotenv npm run open -ws --silent",
-    "generate:jwt": "ssh-keygen -t rsa -b 2048 -f ./jwt/key"
+    "dev": "node cli/processSaver dotenv turbo run dev --parallel --node-colors",
+    "dev:cli-logger": "node cli/processSaver npx ts-node socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run _dev:cli-logger\" --space=cli-main",
+    "_dev:cli-logger": "node cli/processSaver dotenv turbo run dev:cli-logger --parallel --node-colors --fail-fast",
+    "open:dev": "node cli/processSaver dotenv turbo run open:dev --fail-fast",
+    "start": "node cli/processSaver npx ts-node socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run _start\" --space=cli-main",
+    "_start": "node cli/processSaver dotenv turbo run start --parallel --fail-fast",
+    "build": "node cli/processSaver dotenv turbo run build --parallel --fail-fast",
+    "test": "node cli/processSaver dotenv turbo run test --color --output-logs=new-only --fail-fast",
+    "format": "node cli/processSaver dotenv turbo run format --fail-fast",
+    "lint": "node cli/processSaver dotenv turbo run lint --fail-fast",
+    "update": "node cli/processSaver dotenv turbo run update --fail-fast",
+    "open:all": "node cli/processSaver dotenv npm run open -ws --silent",
+    "generate:jwt": "node cli/processSaver ssh-keygen -t rsa -b 2048 -f ./jwt/key",
+    "kill": "node cli/processesKiller"
   },
   "keywords": [],
   "author": "",
@@ -34,6 +35,7 @@
   "dependencies": {
     "cross-env": "^7.0.3",
     "dotenv-cli": "^7.2.1",
+    "tree-kill": "^1.2.2",
     "turbo": "^1.10.12"
   }
 }

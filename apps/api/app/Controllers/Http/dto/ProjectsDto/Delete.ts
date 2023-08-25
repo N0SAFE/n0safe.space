@@ -13,11 +13,11 @@ export class ProjectsRessourceDeleteDto extends BaseDto {
   @Type(() => ProjectsRessourceDeleteBodyDto)
   private _body: ProjectsRessourceDeleteBodyDto = new ProjectsRessourceDeleteBodyDto({})
 
-  public get body(): ProjectsRessourceDeleteBodyDto {
+  public get body (): ProjectsRessourceDeleteBodyDto {
     return this._body || new ProjectsRessourceDeleteBodyDto({})
   }
 
-  public set body(value: ProjectsRessourceDeleteBodyDto | undefined) {
+  public set body (value: ProjectsRessourceDeleteBodyDto | undefined) {
     this._body = new ProjectsRessourceDeleteBodyDto(value || {})
   }
 
@@ -27,11 +27,11 @@ export class ProjectsRessourceDeleteDto extends BaseDto {
   @Type(() => ProjectsRessourceDeleteQueryDto)
   private _query: ProjectsRessourceDeleteQueryDto = new ProjectsRessourceDeleteQueryDto({})
 
-  public get query(): ProjectsRessourceDeleteQueryDto {
+  public get query (): ProjectsRessourceDeleteQueryDto {
     return this._query || new ProjectsRessourceDeleteQueryDto({})
   }
 
-  public set query(value: ProjectsRessourceDeleteQueryDto | undefined) {
+  public set query (value: ProjectsRessourceDeleteQueryDto | undefined) {
     this._query = new ProjectsRessourceDeleteQueryDto(value || {})
   }
 }

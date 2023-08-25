@@ -1,7 +1,7 @@
 import { validate } from 'class-validator'
 
 export class BaseDto {
-  constructor(args) {
+  constructor (args) {
     /**
      * assign all args to this but only if they are defined
      * create a new instance to the nested object if the type as to be BaseDto
@@ -22,7 +22,7 @@ export class BaseDto {
     })
   }
 
-  public async validate() {
+  public async validate () {
     return await validate(this, { whitelist: true, forbidUnknownValues: false })
   }
 }

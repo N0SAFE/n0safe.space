@@ -13,11 +13,11 @@ export class DomainsRessourcePatchDto extends BaseDto {
   @Type(() => DomainsRessourcePatchBodyDto)
   private _body: DomainsRessourcePatchBodyDto = new DomainsRessourcePatchBodyDto({})
 
-  public get body(): DomainsRessourcePatchBodyDto {
+  public get body (): DomainsRessourcePatchBodyDto {
     return this._body || new DomainsRessourcePatchBodyDto({})
   }
 
-  public set body(value: DomainsRessourcePatchBodyDto | undefined) {
+  public set body (value: DomainsRessourcePatchBodyDto | undefined) {
     this._body = new DomainsRessourcePatchBodyDto(value || {})
   }
 
@@ -27,11 +27,11 @@ export class DomainsRessourcePatchDto extends BaseDto {
   @Type(() => DomainsRessourcePatchQueryDto)
   private _query: DomainsRessourcePatchQueryDto = new DomainsRessourcePatchQueryDto({})
 
-  public get query(): DomainsRessourcePatchQueryDto {
+  public get query (): DomainsRessourcePatchQueryDto {
     return this._query || new DomainsRessourcePatchQueryDto({})
   }
 
-  public set query(value: DomainsRessourcePatchQueryDto | undefined) {
+  public set query (value: DomainsRessourcePatchQueryDto | undefined) {
     this._query = new DomainsRessourcePatchQueryDto(value || {})
   }
 }

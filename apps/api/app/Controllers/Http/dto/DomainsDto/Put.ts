@@ -13,11 +13,11 @@ export class DomainsRessourcePutDto extends BaseDto {
   @Type(() => DomainsRessourcePutBodyDto)
   private _body: DomainsRessourcePutBodyDto = new DomainsRessourcePutBodyDto({})
 
-  public get body(): DomainsRessourcePutBodyDto {
+  public get body (): DomainsRessourcePutBodyDto {
     return this._body || new DomainsRessourcePutBodyDto({})
   }
 
-  public set body(value: DomainsRessourcePutBodyDto | undefined) {
+  public set body (value: DomainsRessourcePutBodyDto | undefined) {
     this._body = new DomainsRessourcePutBodyDto(value || {})
   }
 
@@ -27,11 +27,11 @@ export class DomainsRessourcePutDto extends BaseDto {
   @Type(() => DomainsRessourcePutQueryDto)
   private _query: DomainsRessourcePutQueryDto = new DomainsRessourcePutQueryDto({})
 
-  public get query(): DomainsRessourcePutQueryDto {
+  public get query (): DomainsRessourcePutQueryDto {
     return this._query || new DomainsRessourcePutQueryDto({})
   }
 
-  public set query(value: DomainsRessourcePutQueryDto | undefined) {
+  public set query (value: DomainsRessourcePutQueryDto | undefined) {
     this._query = new DomainsRessourcePutQueryDto(value || {})
   }
 }
