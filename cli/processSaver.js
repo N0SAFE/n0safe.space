@@ -3,7 +3,10 @@ const fs = require('fs')
 
 const args = process.argv.slice(2)
 
-const child = spawn(args.join(' '), {
+
+console.log('args: ', args)
+
+const child = spawn(args.map(s => s.replaceAll("'", '"')).join(' '), {
   stdio: 'inherit',
   shell: true,
 })

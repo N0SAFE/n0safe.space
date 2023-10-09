@@ -1,12 +1,12 @@
 {
-  "name": "front",
+  "name": "@n0safe.space/front",
   "private": true,
   "type": "commonjs",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev --no-clear",
-    "dev:cli-logger": "npx ts-node ../../socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run dev\" --space=cli-front",
-    "start": "npx ts-node ../../socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run _start\" --space=cli-front",
+    "dev:cli-logger": "n0safe-logger-serviceWriter --command=\"npm run dev\" --space=cli-front --host=127.0.0.1 --path=cluster --port=4444",
+    "start": "n0safe-logger-serviceWriter --command=\"npm run _start\" --space=cli-front",
     "_start": "nuxt preview",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
@@ -30,6 +30,7 @@
     "@quasar/extras": "^1.16.4",
     "@vueuse/core": "^10.1.2",
     "ansi-to-html": "^0.7.2",
+    "api": "file:../api",
     "chalk": "^5.3.0",
     "decompress": "^4.2.1",
     "dotenv-cli": "^7.2.1",

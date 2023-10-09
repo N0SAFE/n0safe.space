@@ -7,11 +7,15 @@
     "apps/*"
   ],
   "scripts": {
+    "t": "node cli/processSaver \"n0safe-logger-serviceWriter --command='npm run _dev:cli-logger' --space=cli-main\"",
+    "o": "n0safe-logger-cluster",
+    "r": "n0safe-logger-reader",
+    "s": "n0safe-logger-serviceWriter",
     "dev": "node cli/processSaver dotenv turbo run dev --parallel --node-colors",
-    "dev:cli-logger": "node cli/processSaver npx ts-node socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run _dev:cli-logger\" --space=cli-main",
+    "dev:cli-logger": "node cli/processSaver \"n0safe-logger-serviceWriter --command='npm run _dev:cli-logger' --space=cli-main --host=127.0.0.1 --path=cluster --port=4444\"",
     "_dev:cli-logger": "node cli/processSaver dotenv turbo run dev:cli-logger --parallel --node-colors --fail-fast",
     "open:dev": "node cli/processSaver dotenv turbo run open:dev --fail-fast",
-    "start": "node cli/processSaver npx ts-node socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run _start\" --space=cli-main",
+    "start": "node cli/processSaver \"n0safe-logger-serviceWriter --command='npm run _start' --space=cli-main\"",
     "_start": "node cli/processSaver dotenv turbo run start --parallel --fail-fast",
     "build": "node cli/processSaver dotenv turbo run build --parallel --fail-fast",
     "test": "node cli/processSaver dotenv turbo run test --color --output-logs=new-only --fail-fast",
@@ -33,9 +37,11 @@
     "dotenv": "^16.3.1"
   },
   "dependencies": {
+    "@n0safe/logger": "^1.0.13",
+    "@trpc/server": "^10.38.1",
     "cross-env": "^7.0.3",
-    "dotenv-cli": "^7.2.1",
+    "dotenv-cli": "^7.3.0",
     "tree-kill": "^1.2.2",
-    "turbo": "^1.10.12"
+    "turbo": "^1.10.13"
   }
 }

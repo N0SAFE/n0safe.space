@@ -1,0 +1,6 @@
+export * as Delete from './Delete'
+export * as Get from './Get'
+export * as GetCollection from './GetCollection'
+export * as Post from './Post'
+export * as Put from './Put'
+export * as Patch from './Patch'

@@ -11,9 +11,11 @@ import {
 import { BaseDto } from '../BaseDto'
 import { Type } from 'class-transformer'
 
+export type IsEmail = `${string}@${string}.${string}`
+
 export class AuthLoginBodyDto extends BaseDto {
   @IsEmail()
-  public email: string
+  public email: IsEmail
 
   @IsString()
   public password: string

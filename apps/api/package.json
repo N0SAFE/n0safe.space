@@ -1,11 +1,11 @@
 {
-  "name": "api",
+  "name": "@n0safe/api",
   "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "node checkPort.js node ace serve --watch",
-    "dev:cli-logger": "npx ts-node ../../socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run dev\" --space=cli-api",
-    "start": "npx ts-node ../../socket-logger/src/cli-runner/client/serviceWriter.cli.ts --command=\"npm run _start\" --space=cli-api",
+    "dev:cli-logger": "n0safe-logger-serviceWriter --command=\"npm run dev\" --space=cli-api --host=127.0.0.1 --path=cluster --port=4444",
+    "start": "n0safe-logger-serviceWriter --command=\"npm run _start\" --space=cli-api",
     "_start": "node checkPort.js node build/server.js",
     "build": "npm install --package-lock-only && node ace build --production && cd build && npm ci --production",
     "test": "npm run db:unmigrate && node ace test && npm run db:fresh:seed",
@@ -65,6 +65,7 @@
     "class-validator": "^0.14.0",
     "cli-color": "^2.0.3",
     "dotenv-cli": "^7.2.1",
+    "front": "file:../front",
     "jsonwebtoken": "^9.0.1",
     "luxon": "^3.3.0",
     "mysql2": "^3.3.5",

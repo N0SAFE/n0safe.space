@@ -12,8 +12,10 @@ export default class AppProvider {
   }
 
   public async ready () {
-    await import('../start/socket-cluster')
     // App is ready
+    if (this.app.environment === 'web') {
+      await import('../start/socket-cluster')
+    }
   }
 
   public async shutdown () {

@@ -1,4 +1,4 @@
-import LoggerReaderClient from '../socket-logger/client/reader.socket.io'
+import LoggerReaderClient from '@n0safe/logger/dist/client/reader.socket.io'
 import { userStore } from '@/store/user.store'
 
 export default function useSocketLogger() {

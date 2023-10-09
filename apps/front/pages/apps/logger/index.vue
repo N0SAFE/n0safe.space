@@ -113,6 +113,7 @@
 import { ref, onUnmounted } from 'vue'
 import Convert from 'ansi-to-html'
 import useSocketLogger from '@/composables/useSocketLogger'
+import * as type from '@n0safe/api'
 
 const terminalsAlreadyOpen = JSON.parse(
   localStorage.getItem('terminalsAlreadyOpen')
@@ -172,8 +173,9 @@ const addTerminal = (terminal) => {
     return
   }
   const client = createReaderClient({
-    host: 'localhost',
-    port: 65000,
+    host: '127.0.0.1',
+    path: 'cluster',
+    port: 4444,
     space: terminal.name,
   })
 
